@@ -54,8 +54,8 @@
     /* HERO */
     .hero {
       min-height: 92vh; display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 2rem;
       align-items: center;
       padding: 0 3rem;
       max-width: 1200px;
@@ -67,6 +67,7 @@
       overflow: hidden;
       box-shadow: 0 20px 60px rgba(0,0,0,0.12);
       aspect-ratio: 16/9;
+      margin-left: 2rem;
     }
     .hero-video video {
       width: 100%; height: 100%;
@@ -901,6 +902,49 @@
     </div>
     <p class="contact-email">uta.wagner@th-deg.de</p>
   </section>
+
+  <script>
+  (function(){
+    let scrollTimer = null;
+    let isScrolling = false;
+
+    // Add a class to body while scrolling
+    window.addEventListener('scroll', function() {
+      if (!isScrolling) {
+        isScrolling = true;
+        document.body.classList.add('is-scrolling');
+      }
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function() {
+        isScrolling = false;
+        document.body.classList.remove('is-scrolling');
+      }, 400);
+    }, { passive: true });
+  })();
+  </script>
+
+  <style>
+  /* Fast, bright pulse when scrolling */
+  body.is-scrolling .bg-svg circle {
+    animation-duration: 0.4s !important;
+    animation-timing-function: ease-out !important;
+  }
+  body.is-scrolling .bg-svg path {
+    animation-duration: 0.5s !important;
+    animation-timing-function: ease-out !important;
+  }
+  body.is-scrolling .bg-svg text {
+    animation-duration: 0.45s !important;
+    animation-timing-function: ease-out !important;
+  }
+  body.is-scrolling .bg-svg circle {
+    animation-name: pulse-dot-fast !important;
+  }
+  @keyframes pulse-dot-fast {
+    0%,100% { opacity: 0.1; }
+    50%      { opacity: 0.9; }
+  }
+  </style>
 
 </body>
 </html>
