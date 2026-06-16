@@ -23,7 +23,16 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, 'SF Pro Display', 'Inter', sans-serif;
-      background: var(--white);
+      background: linear-gradient(
+        160deg,
+        #ffffff 0%,
+        #f7f9ff 18%,
+        #f5f5f7 38%,
+        #f0f4ff 58%,
+        #f5f5f7 78%,
+        #ffffff 100%
+      );
+      background-attachment: fixed;
       color: var(--black);
       -webkit-font-smoothing: antialiased;
     }
@@ -44,8 +53,37 @@
 
     /* HERO */
     .hero {
-      min-height: 92vh; display: flex; flex-direction: column; justify-content: center;
-      padding: 0 3rem; max-width: 1100px;
+      min-height: 92vh; display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding: 0 3rem;
+      max-width: 1200px;
+    }
+    .hero-text { display: flex; flex-direction: column; }
+    .hero-video {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+      aspect-ratio: 16/9;
+    }
+    .hero-video video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-video-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0.75rem 1rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);
+      font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.85);
+      letter-spacing: 0.04em;
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; padding: 5rem 1.5rem 3rem; gap: 2.5rem; }
+      .hero-video { order: -1; }
     }
     .eyebrow {
       font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
@@ -117,76 +155,109 @@
     .tl-current .tl-date { color: var(--blue); }
     .tl-role { font-size: 13px; font-weight: 500; color: var(--black); margin-bottom: 0.15rem; line-height: 1.35; }
     .tl-place { font-size: 12px; color: var(--gray-dark); font-weight: 300; line-height: 1.4; }
-    .about-bio { font-size: 16px; line-height: 1.78; color: var(--gray-dark); font-weight: 300; letter-spacing: -0.1px; }
+    .about-bio { font-size: 16px; line-height: 1.78; color: var(--gray-dark); font-weight: 300; letter-spacing: -0.1px; text-align: justify; }
     .about-bio strong { font-weight: 500; color: var(--black); }
     .about-bio + .about-bio { margin-top: 1rem; }
     .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 1.75rem; }
     .tag {
       font-size: 12px; font-weight: 500; padding: 5px 13px; border-radius: 980px;
       background: var(--white); border: 0.5px solid rgba(0,0,0,0.15); color: var(--gray-dark);
+      text-decoration: none; transition: background 0.2s, color 0.2s; display: inline-block;
     }
+    .tag:hover { background: var(--black); color: var(--white); border-color: var(--black); }
 
-    /* PUBLICATIONS — KACHELN */
-    .pub-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1px; background: rgba(0,0,0,0.08);
-      max-width: 960px; margin: 0 auto;
+    /* PUBLICATIONS — 2D CIRCLE CAROUSEL */
+    .carousel-scene {
+      position: relative;
+      width: 860px;
+      height: 860px;
+      margin: 0 auto;
     }
-    .pub-tile {
+    .carousel-orbit {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 0.5px solid rgba(0,0,0,0.07);
+    }
+    .pub-card {
+      position: absolute;
+      width: 200px;
       background: var(--white);
-      position: relative; overflow: hidden;
-      cursor: pointer; text-decoration: none; display: block;
-      transition: background 0.25s;
+      border: 0.5px solid rgba(0,0,0,0.11);
+      border-radius: 16px;
+      padding: 1.4rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+      transition: box-shadow 0.25s, border-color 0.25s;
+      cursor: pointer;
     }
-    .pub-tile:hover { background: var(--white); }
-
-    /* Paper-Bild oben */
-    .pub-thumb {
-      width: 100%; aspect-ratio: 16/9; overflow: hidden;
-      position: relative; background: #e8e8ed;
-      flex-shrink: 0;
+    .pub-card:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.11);
+      border-color: rgba(0,113,227,0.28);
     }
-    .pub-thumb img {
-      width: 100%; height: 100%; object-fit: cover;
-      display: block;
-      transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
+    .pub-card.active {
+      border-color: var(--blue);
+      box-shadow: 0 8px 32px rgba(0,113,227,0.15);
     }
-    .pub-tile:hover .pub-thumb img { transform: scale(1.04); }
+    .pub-card-venue {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.09em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 0.5rem;
+    }
+    .pub-card-title {
+      font-size: 13px; font-weight: 600; color: var(--black);
+      letter-spacing: -0.1px; line-height: 1.4; margin-bottom: 0.4rem; flex: 1;
+    }
+    .pub-card-authors {
+      font-size: 11px; color: var(--gray-mid); font-weight: 300;
+      line-height: 1.5; margin-bottom: 0.4rem;
+    }
+    .pub-card-link {
+      font-size: 11px; font-weight: 600; color: var(--blue);
+    }
 
-    /* SVG Placeholder */
-    .pub-thumb svg { width: 100%; height: 100%; }
+    /* Centre animation */
+    .carousel-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      pointer-events: none;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+    }
+    .carousel-center img {
+      width: 100%; display: block;
+      border-radius: 16px;
+    }
 
-    /* Overlay beim Hover */
-    .pub-overlay {
-      position: absolute; inset: 0;
-      background: rgba(0,0,0,0.55);
+    .carousel-btns {
+      display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;
+    }
+    .carousel-btn {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 0.5px solid rgba(0,0,0,0.15);
+      background: var(--white);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      cursor: pointer; font-size: 16px; color: var(--gray-dark);
+      transition: box-shadow 0.2s;
       display: flex; align-items: center; justify-content: center;
-      opacity: 0; transition: opacity 0.3s;
     }
-    .pub-tile:hover .pub-overlay { opacity: 1; }
-    .pub-overlay-text {
-      color: #fff; font-size: 13px; font-weight: 500;
-      letter-spacing: 0.04em; text-transform: uppercase; letter-spacing: 0.1em;
+    .carousel-btn:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.13); }
+    .carousel-hint {
+      text-align: center; margin-top: 0.75rem;
+      font-size: 12px; color: var(--gray-mid); font-weight: 300;
     }
-
-    /* Text-Bereich */
-    .pub-body { padding: 1.5rem 1.5rem 1.75rem; }
-    .pub-venue-badge {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--blue); margin-bottom: 0.6rem;
+    @media (max-width: 768px) {
+      .carousel-scene { width: 360px; height: 360px; }
+      .pub-card { width: 120px; padding: 0.75rem; }
+      .pub-card-title { font-size: 11px; }
+      .pub-card-authors { display: none; }
+      .carousel-center { width: 160px; }
     }
-    .pub-title-text {
-      font-size: 15px; font-weight: 600; color: var(--black);
-      letter-spacing: -0.2px; line-height: 1.4; margin-bottom: 0.5rem;
-    }
-    .pub-authors-text { font-size: 12px; color: var(--gray-mid); font-weight: 300; line-height: 1.5; }
-    .pub-arrow {
-      display: inline-block; margin-top: 0.9rem; font-size: 12px;
-      font-weight: 600; color: var(--blue); letter-spacing: 0.05em;
-      opacity: 0; transform: translateX(-4px);
-      transition: opacity 0.25s, transform 0.25s;
-    }
-    .pub-tile:hover .pub-arrow { opacity: 1; transform: translateX(0); }
 
     /* CONTACT */
     .contact-section {
@@ -210,13 +281,49 @@
 
     /* BACKGROUND VISUALS */
     .hero-wrap { position: relative; overflow: hidden; }
-    .hero-wrap .bg-svg { position: absolute; top: 0; right: 0; width: 60%; height: 100%; opacity: 0.045; pointer-events: none; }
-    .about-bg { position: relative; overflow: hidden; }
-    .about-bg .bg-svg { position: absolute; bottom: -60px; right: -40px; width: 40%; height: 110%; opacity: 0.038; pointer-events: none; }
+    .hero-wrap .bg-svg { position: absolute; top: 0; right: 0; width: 65%; height: 100%; opacity: 0.06; pointer-events: none; }
+    .about-bg { position: relative; overflow: hidden; background: rgba(245,245,247,0.7) !important; backdrop-filter: blur(0px); }
+    .about-bg .bg-svg { position: absolute; bottom: -60px; right: -40px; width: 42%; height: 110%; opacity: 0.05; pointer-events: none; }
     .current-research-wrap { position: relative; overflow: hidden; }
-    .current-research-wrap .bg-svg { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 70%; height: 130%; opacity: 0.032; pointer-events: none; }
+    .current-research-wrap .bg-svg { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80%; height: 130%; opacity: 0.045; pointer-events: none; }
     .contact-section { position: relative; overflow: hidden; }
-    .contact-section .bg-svg { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80%; height: 140%; opacity: 0.09; pointer-events: none; filter: invert(1); }
+    .contact-section .bg-svg { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80%; height: 140%; opacity: 0.1; pointer-events: none; }
+
+    /* DATA STREAM ANIMATIONS */
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 0.15; }
+      50%       { opacity: 0.75; }
+    }
+    @keyframes pulse-line {
+      0%, 100% { opacity: 0.03; }
+      50%       { opacity: 0.1; }
+    }
+    @keyframes pulse-text {
+      0%, 100% { opacity: 0.1; }
+      50%       { opacity: 0.45; }
+    }
+    .bg-svg circle {
+      animation: pulse-dot 2.4s ease-in-out infinite;
+    }
+    .bg-svg path {
+      animation: pulse-line 3s ease-in-out infinite;
+    }
+    .bg-svg text {
+      animation: pulse-text 2.8s ease-in-out infinite;
+    }
+    /* Stagger each element so they don't all pulse together */
+    .bg-svg circle:nth-child(3n)   { animation-delay: 0s; }
+    .bg-svg circle:nth-child(3n+1) { animation-delay: 0.6s; }
+    .bg-svg circle:nth-child(3n+2) { animation-delay: 1.2s; }
+    .bg-svg path:nth-child(4n)     { animation-delay: 0s; }
+    .bg-svg path:nth-child(4n+1)   { animation-delay: 0.8s; }
+    .bg-svg path:nth-child(4n+2)   { animation-delay: 1.6s; }
+    .bg-svg path:nth-child(4n+3)   { animation-delay: 2.4s; }
+    .bg-svg text:nth-child(5n)     { animation-delay: 0s; }
+    .bg-svg text:nth-child(5n+1)   { animation-delay: 0.5s; }
+    .bg-svg text:nth-child(5n+2)   { animation-delay: 1.0s; }
+    .bg-svg text:nth-child(5n+3)   { animation-delay: 1.5s; }
+    .bg-svg text:nth-child(5n+4)   { animation-delay: 2.0s; }
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
@@ -226,7 +333,7 @@
       section { padding: 4rem 1.5rem; }
       .divider { margin: 0 1.5rem; }
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .pub-grid { grid-template-columns: 1fr; }
+      .pub-grid { grid-template-columns: 1fr; gap: 1rem; }
       .contact-section { padding: 5rem 1.5rem; }
       .hero-wrap .bg-svg { opacity: 0.025; }
     }
@@ -238,6 +345,7 @@
     <a href="#" class="nav-logo">Dr. Uta Wagner</a>
     <div class="nav-links">
       <a href="#about">About</a>
+      <a href="#research">Research</a>
       <a href="#publications">Publications</a>
       <a href="#contact">Contact</a>
     </div>
@@ -245,46 +353,127 @@
 
   <!-- HERO -->
   <div class="hero-wrap">
-  <!-- Background: gaze paths + hand silhouette -->
-  <svg class="bg-svg" viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-    <!-- Large eye outline -->
-    <ellipse cx="520" cy="320" rx="260" ry="140" fill="none" stroke="#000" stroke-width="8"/>
-    <circle cx="520" cy="320" r="90" fill="none" stroke="#000" stroke-width="6"/>
-    <circle cx="520" cy="320" r="38" fill="#000" opacity="0.6"/>
-    <!-- Iris detail rings -->
-    <circle cx="520" cy="320" r="65" fill="none" stroke="#000" stroke-width="2" opacity="0.4"/>
-    <circle cx="520" cy="320" r="50" fill="none" stroke="#000" stroke-width="1.5" opacity="0.3"/>
-    <!-- Gaze ray lines emanating outward -->
-    <line x1="520" y1="320" x2="100" y2="100" stroke="#000" stroke-width="1.5" opacity="0.3" stroke-dasharray="8,6"/>
-    <line x1="520" y1="320" x2="200" y2="600" stroke="#000" stroke-width="1.5" opacity="0.25" stroke-dasharray="8,6"/>
-    <line x1="520" y1="320" x2="750" y2="80" stroke="#000" stroke-width="1.5" opacity="0.2" stroke-dasharray="8,6"/>
-    <!-- Gaze target dots -->
-    <circle cx="100" cy="100" r="14" fill="none" stroke="#000" stroke-width="3" opacity="0.4"/>
-    <circle cx="200" cy="600" r="10" fill="none" stroke="#000" stroke-width="2.5" opacity="0.3"/>
-    <circle cx="750" cy="80" r="10" fill="none" stroke="#000" stroke-width="2.5" opacity="0.25"/>
-    <!-- Hand silhouette (lower right) -->
-    <!-- Palm -->
-    <ellipse cx="620" cy="720" rx="80" ry="90" fill="none" stroke="#000" stroke-width="5" opacity="0.5"/>
-    <!-- Thumb -->
-    <path d="M545 700 Q510 660 530 620 Q545 590 570 610 Q585 640 575 680" fill="none" stroke="#000" stroke-width="5" opacity="0.5" stroke-linecap="round"/>
-    <!-- Index finger -->
-    <path d="M580 635 Q575 570 585 520 Q592 490 610 505 Q625 520 618 570 Q614 610 610 635" fill="none" stroke="#000" stroke-width="5" opacity="0.5" stroke-linecap="round"/>
-    <!-- Middle finger -->
-    <path d="M615 630 Q613 558 622 505 Q630 472 650 485 Q668 500 662 555 Q657 600 650 630" fill="none" stroke="#000" stroke-width="5" opacity="0.5" stroke-linecap="round"/>
-    <!-- Ring finger -->
-    <path d="M653 638 Q655 575 663 530 Q672 500 690 512 Q707 527 700 575 Q694 615 686 640" fill="none" stroke="#000" stroke-width="5" opacity="0.45" stroke-linecap="round"/>
-    <!-- Pinky -->
-    <path d="M685 655 Q692 610 698 578 Q705 555 720 563 Q734 574 728 605 Q722 635 710 658" fill="none" stroke="#000" stroke-width="4" opacity="0.4" stroke-linecap="round"/>
-    <!-- Pinch gesture circle hint -->
-    <circle cx="596" cy="510" r="22" fill="none" stroke="#000" stroke-width="3" opacity="0.35" stroke-dasharray="5,4"/>
+<svg class="bg-svg" viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <path d="M33.0,0.0 L49.0,45.0 L45.7,90.0 L78.5,135.0 L74.7,180.0 L88.5,225.0 L36.9,270.0 L58.4,315.0 L33.3,360.0 L45.4,405.0 L63.7,450.0 L33.1,495.0 L44.1,540.0 L73.0,585.0 L66.3,630.0 L45.5,675.0 L69.1,720.0 L83.2,765.0 L31.8,810.0 L83.0,855.0 L76.1,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="33.0" cy="0.0" r="2.2" fill="#000" opacity="0.36"/>
+    <circle cx="78.5" cy="135.0" r="3.4" fill="#000" opacity="0.43"/>
+    <circle cx="36.9" cy="270.0" r="1.7" fill="#000" opacity="0.34"/>
+    <circle cx="45.4" cy="405.0" r="3.2" fill="#000" opacity="0.54"/>
+    <circle cx="44.1" cy="540.0" r="3.1" fill="#000" opacity="0.59"/>
+    <circle cx="45.5" cy="675.0" r="2.6" fill="#000" opacity="0.69"/>
+    <circle cx="31.8" cy="810.0" r="2.3" fill="#000" opacity="0.52"/>
+    <text x="50.7" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="41.9" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <text x="68.7" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="71.3" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="36.8" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <path d="M207.3,0.0 L199.0,45.0 L199.7,90.0 L168.5,135.0 L173.2,180.0 L197.6,225.0 L154.6,270.0 L167.0,315.0 L187.1,360.0 L189.1,405.0 L188.0,450.0 L148.8,495.0 L184.9,540.0 L178.4,585.0 L159.9,630.0 L173.8,675.0 L161.5,720.0 L203.4,765.0 L188.3,810.0 L158.3,855.0 L165.0,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="207.3" cy="0.0" r="3.0" fill="#000" opacity="0.32"/>
+    <circle cx="168.5" cy="135.0" r="3.1" fill="#000" opacity="0.62"/>
+    <circle cx="154.6" cy="270.0" r="2.3" fill="#000" opacity="0.33"/>
+    <circle cx="189.1" cy="405.0" r="3.3" fill="#000" opacity="0.53"/>
+    <circle cx="184.9" cy="540.0" r="2.9" fill="#000" opacity="0.39"/>
+    <circle cx="173.8" cy="675.0" r="2.5" fill="#000" opacity="0.65"/>
+    <circle cx="188.3" cy="810.0" r="2.8" fill="#000" opacity="0.36"/>
+    <text x="204.7" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
+    <text x="159.6" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <text x="193.0" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="164.9" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
+    <text x="193.3" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
+    <path d="M268.6,0.0 L213.6,45.0 L236.3,90.0 L253.1,135.0 L259.9,180.0 L214.5,225.0 L215.0,270.0 L248.3,315.0 L242.9,360.0 L229.4,405.0 L242.9,450.0 L234.7,495.0 L220.8,540.0 L240.2,585.0 L265.1,630.0 L248.3,675.0 L212.1,720.0 L261.4,765.0 L252.8,810.0 L253.9,855.0 L226.5,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="268.6" cy="0.0" r="2.1" fill="#000" opacity="0.36"/>
+    <circle cx="253.1" cy="135.0" r="1.5" fill="#000" opacity="0.59"/>
+    <circle cx="215.0" cy="270.0" r="2.9" fill="#000" opacity="0.69"/>
+    <circle cx="229.4" cy="405.0" r="3.0" fill="#000" opacity="0.50"/>
+    <circle cx="220.8" cy="540.0" r="1.7" fill="#000" opacity="0.55"/>
+    <circle cx="248.3" cy="675.0" r="3.2" fill="#000" opacity="0.50"/>
+    <circle cx="252.8" cy="810.0" r="1.9" fill="#000" opacity="0.45"/>
+    <text x="241.3" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
+    <text x="220.0" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="247.9" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="270.1" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
+    <text x="257.8" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <path d="M304.0,0.0 L343.8,45.0 L332.4,90.0 L296.1,135.0 L296.2,180.0 L317.1,225.0 L285.8,270.0 L327.6,315.0 L333.0,360.0 L343.3,405.0 L314.8,450.0 L288.8,495.0 L323.0,540.0 L341.3,585.0 L291.3,630.0 L314.5,675.0 L319.6,720.0 L342.5,765.0 L340.2,810.0 L329.1,855.0 L324.9,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="304.0" cy="0.0" r="2.9" fill="#000" opacity="0.46"/>
+    <circle cx="296.1" cy="135.0" r="2.8" fill="#000" opacity="0.45"/>
+    <circle cx="285.8" cy="270.0" r="3.3" fill="#000" opacity="0.48"/>
+    <circle cx="343.3" cy="405.0" r="2.0" fill="#000" opacity="0.33"/>
+    <circle cx="323.0" cy="540.0" r="1.5" fill="#000" opacity="0.52"/>
+    <circle cx="314.5" cy="675.0" r="2.7" fill="#000" opacity="0.30"/>
+    <circle cx="340.2" cy="810.0" r="2.9" fill="#000" opacity="0.32"/>
+    <text x="337.4" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="290.8" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="319.8" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="296.3" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="345.2" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <path d="M427.8,0.0 L431.2,45.0 L443.0,90.0 L453.2,135.0 L433.6,180.0 L412.3,225.0 L427.0,270.0 L422.8,315.0 L402.8,360.0 L438.9,405.0 L419.4,450.0 L423.0,495.0 L452.0,540.0 L400.2,585.0 L438.6,630.0 L438.1,675.0 L400.6,720.0 L443.3,765.0 L448.0,810.0 L403.7,855.0 L409.0,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="427.8" cy="0.0" r="2.6" fill="#000" opacity="0.36"/>
+    <circle cx="453.2" cy="135.0" r="1.9" fill="#000" opacity="0.49"/>
+    <circle cx="427.0" cy="270.0" r="3.2" fill="#000" opacity="0.33"/>
+    <circle cx="438.9" cy="405.0" r="3.1" fill="#000" opacity="0.64"/>
+    <circle cx="452.0" cy="540.0" r="1.7" fill="#000" opacity="0.56"/>
+    <circle cx="438.1" cy="675.0" r="2.6" fill="#000" opacity="0.31"/>
+    <circle cx="448.0" cy="810.0" r="1.7" fill="#000" opacity="0.60"/>
+    <text x="448.0" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <text x="432.0" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
+    <text x="424.4" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
+    <text x="443.6" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
+    <text x="453.0" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
+    <path d="M516.2,0.0 L494.3,45.0 L514.8,90.0 L553.6,135.0 L507.5,180.0 L540.7,225.0 L519.6,270.0 L517.6,315.0 L551.8,360.0 L554.2,405.0 L526.1,450.0 L536.5,495.0 L500.4,540.0 L509.5,585.0 L552.5,630.0 L527.6,675.0 L525.2,720.0 L538.4,765.0 L494.2,810.0 L527.9,855.0 L522.7,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="516.2" cy="0.0" r="3.2" fill="#000" opacity="0.36"/>
+    <circle cx="553.6" cy="135.0" r="3.4" fill="#000" opacity="0.33"/>
+    <circle cx="519.6" cy="270.0" r="1.9" fill="#000" opacity="0.54"/>
+    <circle cx="554.2" cy="405.0" r="2.9" fill="#000" opacity="0.39"/>
+    <circle cx="500.4" cy="540.0" r="1.7" fill="#000" opacity="0.66"/>
+    <circle cx="527.6" cy="675.0" r="2.0" fill="#000" opacity="0.54"/>
+    <circle cx="494.2" cy="810.0" r="2.7" fill="#000" opacity="0.47"/>
+    <text x="519.8" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="524.6" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="531.1" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <text x="557.5" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="499.2" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <path d="M603.9,0.0 L636.8,45.0 L624.8,90.0 L655.0,135.0 L655.4,180.0 L596.1,225.0 L635.3,270.0 L631.5,315.0 L601.9,360.0 L629.9,405.0 L627.9,450.0 L604.0,495.0 L617.8,540.0 L599.9,585.0 L611.1,630.0 L613.7,675.0 L623.5,720.0 L630.3,765.0 L614.9,810.0 L658.5,855.0 L647.2,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="603.9" cy="0.0" r="2.6" fill="#000" opacity="0.57"/>
+    <circle cx="655.0" cy="135.0" r="2.6" fill="#000" opacity="0.67"/>
+    <circle cx="635.3" cy="270.0" r="1.7" fill="#000" opacity="0.65"/>
+    <circle cx="629.9" cy="405.0" r="2.0" fill="#000" opacity="0.66"/>
+    <circle cx="617.8" cy="540.0" r="3.0" fill="#000" opacity="0.36"/>
+    <circle cx="613.7" cy="675.0" r="2.1" fill="#000" opacity="0.38"/>
+    <circle cx="614.9" cy="810.0" r="2.2" fill="#000" opacity="0.57"/>
+    <text x="629.8" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="640.3" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
+    <text x="632.9" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="616.1" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="619.9" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <path d="M784.0,0.0 L733.7,45.0 L752.2,90.0 L739.3,135.0 L793.6,180.0 L741.2,225.0 L759.2,270.0 L776.1,315.0 L766.8,360.0 L738.1,405.0 L791.4,450.0 L775.1,495.0 L740.4,540.0 L733.2,585.0 L754.5,630.0 L766.3,675.0 L758.4,720.0 L733.6,765.0 L754.2,810.0 L790.6,855.0 L793.1,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="784.0" cy="0.0" r="1.6" fill="#000" opacity="0.44"/>
+    <circle cx="739.3" cy="135.0" r="2.9" fill="#000" opacity="0.57"/>
+    <circle cx="759.2" cy="270.0" r="2.2" fill="#000" opacity="0.52"/>
+    <circle cx="738.1" cy="405.0" r="3.2" fill="#000" opacity="0.69"/>
+    <circle cx="740.4" cy="540.0" r="3.0" fill="#000" opacity="0.67"/>
+    <circle cx="766.3" cy="675.0" r="2.0" fill="#000" opacity="0.37"/>
+    <circle cx="754.2" cy="810.0" r="3.1" fill="#000" opacity="0.37"/>
+    <text x="757.2" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
+    <text x="764.2" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="796.4" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
+    <text x="759.5" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="759.2" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
   </svg>
   <div class="hero">
-    <p class="eyebrow">HCI Researcher · XR · Gaze &amp; Multimodal Interaction</p>
-    <h1>Where does<br>attention end and<br><em>action begin?</em></h1>
-    <p class="hero-sub">I study how perception and action divide the work between them — and how to design systems that get that division right. From interaction in 3D space to how people perform under pressure, I'm interested in the gap between what systems assume and what humans actually do.</p>
-    <div class="btn-group">
-      <a href="#publications" class="btn-primary">View Publications</a>
-      <a href="#contact" class="btn-secondary">Get in Touch</a>
+    <div class="hero-text">
+      <p class="eyebrow">HCI Researcher · XR · Gaze &amp; Multimodal Interaction</p>
+      <h1>Where does<br>attention end and<br><em>action begin?</em></h1>
+      <p class="hero-sub">I study how perception and action divide the work between them — and how to design systems that get that division right. From interaction in 3D space to how people perform under pressure, I'm interested in the gap between what systems assume and what humans actually do.</p>
+      <div class="btn-group">
+        <a href="#research" class="btn-primary">View Research</a>
+        <a href="#contact" class="btn-secondary">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-video">
+      <video autoplay muted loop playsinline>
+        <source src="uist24a-sub3907-cam-i36.mp4" type="video/mp4">
+      </video>
+      <div class="hero-video-label">Eye-Hand Movement of Objects in Near Space · UIST 2024</div>
     </div>
   </div>
   </div><!-- /hero-wrap -->
@@ -293,18 +482,62 @@
 
   <!-- ABOUT -->
   <section class="about-bg" id="about">
-  <!-- Background: hand reaching -->
-  <svg class="bg-svg" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-    <ellipse cx="250" cy="430" rx="130" ry="145" fill="none" stroke="#000" stroke-width="7" opacity="0.7"/>
-    <path d="M128 400 Q85 340 110 270 Q125 225 165 245 Q195 265 185 320" fill="none" stroke="#000" stroke-width="7" opacity="0.7" stroke-linecap="round"/>
-    <path d="M168 310 Q162 210 178 140 Q190 95 220 112 Q248 132 238 210 Q228 270 225 315" fill="none" stroke="#000" stroke-width="7" opacity="0.7" stroke-linecap="round"/>
-    <path d="M228 308 Q227 198 242 126 Q254 78 286 92 Q316 110 306 190 Q296 255 288 310" fill="none" stroke="#000" stroke-width="7" opacity="0.7" stroke-linecap="round"/>
-    <path d="M290 322 Q294 225 308 162 Q320 120 350 133 Q378 150 366 225 Q355 280 340 326" fill="none" stroke="#000" stroke-width="6" opacity="0.6" stroke-linecap="round"/>
-    <path d="M340 348 Q355 285 366 248 Q378 218 402 228 Q424 242 412 285 Q400 322 378 350" fill="none" stroke="#000" stroke-width="5" opacity="0.55" stroke-linecap="round"/>
-    <!-- Gaze dot above hand -->
-    <circle cx="220" cy="112" r="28" fill="none" stroke="#000" stroke-width="4" opacity="0.4" stroke-dasharray="6,5"/>
-    <circle cx="220" cy="112" r="10" fill="#000" opacity="0.25"/>
-    <line x1="220" y1="84" x2="200" y2="20" stroke="#000" stroke-width="2" opacity="0.25" stroke-dasharray="6,5"/>
+<svg class="bg-svg" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <path d="M39.4,0.0 L49.4,43.8 L47.3,87.5 L67.8,131.2 L65.4,175.0 L74.1,218.8 L41.8,262.5 L55.2,306.2 L39.6,350.0 L47.1,393.8 L58.6,437.5 L39.4,481.2 L46.3,525.0 L64.4,568.8 L60.2,612.5 L47.2,656.2 L61.9,700.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="39.4" cy="0.0" r="3.1" fill="#000" opacity="0.30"/>
+    <circle cx="67.8" cy="131.2" r="3.1" fill="#000" opacity="0.58"/>
+    <circle cx="41.8" cy="262.5" r="2.2" fill="#000" opacity="0.36"/>
+    <circle cx="47.1" cy="393.8" r="3.4" fill="#000" opacity="0.43"/>
+    <circle cx="46.3" cy="525.0" r="1.7" fill="#000" opacity="0.34"/>
+    <circle cx="47.2" cy="656.2" r="3.2" fill="#000" opacity="0.54"/>
+    <text x="52.3" y="87.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="46.8" y="262.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
+    <text x="63.6" y="437.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="65.2" y="612.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
+    <path d="M116.5,0.0 L129.9,43.8 L140.1,87.5 L119.2,131.2 L112.4,175.0 L107.5,218.8 L131.2,262.5 L135.7,306.2 L144.1,350.0 L138.9,393.8 L139.4,437.5 L119.9,481.2 L122.9,525.0 L138.1,568.8 L111.2,612.5 L118.9,656.2 L131.5,700.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="116.5" cy="0.0" r="2.9" fill="#000" opacity="0.57"/>
+    <circle cx="119.2" cy="131.2" r="1.6" fill="#000" opacity="0.55"/>
+    <circle cx="131.2" cy="262.5" r="2.6" fill="#000" opacity="0.40"/>
+    <circle cx="138.9" cy="393.8" r="2.4" fill="#000" opacity="0.41"/>
+    <circle cx="122.9" cy="525.0" r="3.4" fill="#000" opacity="0.58"/>
+    <circle cx="118.9" cy="656.2" r="1.9" fill="#000" opacity="0.43"/>
+    <text x="145.1" y="87.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="136.2" y="262.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <text x="144.4" y="437.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="116.2" y="612.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <path d="M226.7,0.0 L260.6,43.8 L246.8,87.5 L252.8,131.2 L232.6,175.0 L244.0,218.8 L259.5,262.5 L249.8,306.2 L229.8,350.0 L229.7,393.8 L253.9,437.5 L245.6,481.2 L254.0,525.0 L241.2,568.8 L247.4,612.5 L238.5,656.2 L264.0,700.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="226.7" cy="0.0" r="1.8" fill="#000" opacity="0.50"/>
+    <circle cx="252.8" cy="131.2" r="3.0" fill="#000" opacity="0.64"/>
+    <circle cx="259.5" cy="262.5" r="1.8" fill="#000" opacity="0.36"/>
+    <circle cx="229.7" cy="393.8" r="2.9" fill="#000" opacity="0.54"/>
+    <circle cx="254.0" cy="525.0" r="2.3" fill="#000" opacity="0.54"/>
+    <circle cx="238.5" cy="656.2" r="2.4" fill="#000" opacity="0.40"/>
+    <text x="251.8" y="87.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="264.5" y="262.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="258.9" y="437.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="252.4" y="612.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <path d="M324.1,0.0 L324.8,43.8 L344.8,87.5 L341.7,131.2 L317.2,175.0 L326.7,218.8 L313.8,262.5 L343.2,306.2 L341.5,350.0 L318.6,393.8 L332.3,437.5 L331.1,481.2 L312.8,525.0 L337.2,568.8 L328.3,612.5 L337.8,656.2 L327.9,700.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="324.1" cy="0.0" r="1.5" fill="#000" opacity="0.43"/>
+    <circle cx="341.7" cy="131.2" r="1.5" fill="#000" opacity="0.67"/>
+    <circle cx="313.8" cy="262.5" r="3.3" fill="#000" opacity="0.63"/>
+    <circle cx="318.6" cy="393.8" r="2.1" fill="#000" opacity="0.32"/>
+    <circle cx="312.8" cy="525.0" r="3.3" fill="#000" opacity="0.68"/>
+    <circle cx="337.8" cy="656.2" r="1.7" fill="#000" opacity="0.49"/>
+    <text x="349.8" y="87.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="318.8" y="262.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
+    <text x="337.3" y="437.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
+    <text x="333.3" y="612.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
+    <path d="M463.4,0.0 L477.9,43.8 L481.1,87.5 L495.4,131.2 L494.0,175.0 L487.0,218.8 L484.4,262.5 L485.3,306.2 L472.8,350.0 L483.7,393.8 L471.7,437.5 L492.8,481.2 L474.9,525.0 L466.7,568.8 L459.4,612.5 L457.7,656.2 L479.0,700.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="463.4" cy="0.0" r="2.7" fill="#000" opacity="0.30"/>
+    <circle cx="495.4" cy="131.2" r="2.9" fill="#000" opacity="0.32"/>
+    <circle cx="484.4" cy="262.5" r="1.6" fill="#000" opacity="0.31"/>
+    <circle cx="483.7" cy="393.8" r="2.2" fill="#000" opacity="0.51"/>
+    <circle cx="474.9" cy="525.0" r="2.1" fill="#000" opacity="0.49"/>
+    <circle cx="457.7" cy="656.2" r="2.6" fill="#000" opacity="0.59"/>
+    <text x="486.1" y="87.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
+    <text x="489.4" y="262.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <text x="476.7" y="437.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
+    <text x="464.4" y="612.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
   </svg>
     <div class="about-grid">
       <div>
@@ -313,24 +546,24 @@
         <div class="about-role">HCI Researcher &amp; Human-Centered Security</div>
         <div class="timeline">
           <div class="tl-item tl-current">
-            <span class="tl-date">März 2026 –<br>heute</span>
+            <span class="tl-date">Mar 2026 –<br>present</span>
             <div>
               <div class="tl-role">Research Associate</div>
-              <div class="tl-place">THD · Campus Vilshofen<br>Prof. Manfred Vielberth</div>
+              <div class="tl-place"><a href="https://www.th-deg.de/tc-vilshofen" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">Deggendorf Institute of Technology</a> · Campus Vilshofen<br><a href="https://thd-web-lb-ext.th-deg.de/de/Manfred-Vielberth-Fakult%C3%A4t%20Angewandte%20Informatik-Professorinnen%20und%20Professoren-40732903" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">Prof. Manfred Vielberth</a></div>
             </div>
           </div>
           <div class="tl-item">
             <span class="tl-date">2024 – 2025</span>
             <div>
               <div class="tl-role">Postdoctoral Researcher</div>
-              <div class="tl-place">Universität Konstanz · HCI Lab<br>TT-Prof. Tiare Feuchtner</div>
+              <div class="tl-place"><a href="https://hci.uni-konstanz.de" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">University of Konstanz</a> · HCI Lab<br><a href="https://hci.uni-konstanz.de/members/feuchtner/" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">TT-Prof. Tiare Feuchtner</a></div>
             </div>
           </div>
           <div class="tl-item">
-            <span class="tl-date">– 2024</span>
+            <span class="tl-date">2021 – 2024</span>
             <div>
               <div class="tl-role">PhD in Computer Science</div>
-              <div class="tl-place">Aarhus University<br>Prof. Ken Pfeuffer &amp; Prof. Hans Gellersen</div>
+              <div class="tl-place"><a href="https://cs.au.dk" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">Aarhus University, Denmark</a><br><a href="https://kenpfeuffer.com" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">Prof. Ken Pfeuffer</a> &amp; <a href="https://www.lancaster.ac.uk/scc/about-us/people/hans-gellersen" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">Prof. Hans Gellersen</a></div>
             </div>
           </div>
         </div>
@@ -339,25 +572,25 @@
         <p class="section-label">About</p>
         <h2 class="section-heading" style="margin-bottom:1.25rem">Built on observation.<br>Driven by context.</h2>
         <p class="about-bio">
-          I am an HCI researcher working on <strong>gaze-based interaction, Extended Reality, and how people perform in high-stakes situations</strong>. A thread that runs through everything I do: systems work best when they respect what humans are already good at — and step in precisely where they aren't.
+          I am an HCI researcher working on gaze-based interaction, extended reality, and how people perform in high-stakes situations. A thread that runs through everything I do: systems work best when they respect what humans are already good at — and step in precisely where they aren't.
         </p>
         <p class="about-bio">
-          My PhD at <strong>Aarhus University</strong> (Prof. Ken Pfeuffer &amp; Prof. Hans Gellersen) explored how gaze and hand input can work together in 3D environments — studying selection, manipulation, and the interplay between the two modalities. I then spent a year as a postdoc at the <strong>HCI Lab of TT-Prof. Tiare Feuchtner</strong> at Universität Konstanz.
+          My PhD at <a href="https://cs.au.dk" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">Aarhus University, Denmark</a> (<a href="https://kenpfeuffer.com" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">Prof. Ken Pfeuffer</a> &amp; <a href="https://www.lancaster.ac.uk/scc/about-us/people/hans-gellersen" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">Prof. Hans Gellersen</a>) explored how gaze and hand input can work together in 3D environments — studying selection, manipulation, and the interplay between the two modalities. I then spent a year as a postdoc at the HCI Lab of <a href="https://hci.uni-konstanz.de/members/feuchtner/" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">TT-Prof. Tiare Feuchtner</a> at the <a href="https://hci.uni-konstanz.de" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">University of Konstanz</a>.
         </p>
         <p class="about-bio">
-          Since March 2026 I am a <strong>Research Associate at THD Campus Vilshofen</strong> with Prof. Manfred Vielberth. My current work sits at the intersection of <strong>AI-assisted learning and human-centered security</strong>. I'm studying how AI should be integrated into educational contexts without eroding the learner's own competence — and why current cybersecurity training tends to fail exactly when it matters most: the moment an actual attack happens, people are under stress, and the gap between what was taught and what can be recalled becomes critical.
+          Since March 2026 I am a Research Associate at <a href="https://www.th-deg.de/tc-vilshofen" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">Deggendorf Institute of Technology · Campus Vilshofen</a> with <a href="https://thd-web-lb-ext.th-deg.de/de/Manfred-Vielberth-Fakult%C3%A4t%20Angewandte%20Informatik-Professorinnen%20und%20Professoren-40732903" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">Prof. Manfred Vielberth</a>. My current work sits at the intersection of AI-assisted learning and human-centered security. I am studying how AI should be integrated into educational contexts without eroding the learner's own competence — and why current cybersecurity training tends to fail exactly when it matters most: the moment an actual attack happens, people are under stress, and the gap between what was taught and what can be recalled becomes critical.
         </p>
         <div class="tags">
-          <span class="tag">Eye Tracking</span>
-          <span class="tag">Gaze Interaction</span>
-          <span class="tag">Extended Reality</span>
-          <span class="tag">Eye–Hand Input</span>
-          <span class="tag">3D Manipulation</span>
-          <span class="tag">Multimodal Interfaces</span>
-          <span class="tag">Fitts' Law</span>
-          <span class="tag">Human-Centered Security</span>
-          <span class="tag">Spatial Computing</span>
-          <span class="tag">Virtual Reality</span>
+          <a href="https://en.wikipedia.org/wiki/Eye_tracking" target="_blank" class="tag">Eye Tracking</a>
+          <a href="https://en.wikipedia.org/wiki/Gaze-based_interaction" target="_blank" class="tag">Gaze Interaction</a>
+          <a href="https://en.wikipedia.org/wiki/Extended_reality" target="_blank" class="tag">Extended Reality</a>
+          <a href="https://dl.acm.org/doi/10.1145/3544548.3581423" target="_blank" class="tag">Eye–Hand Input</a>
+          <a href="https://en.wikipedia.org/wiki/3D_computer_graphics" target="_blank" class="tag">3D Manipulation</a>
+          <a href="https://en.wikipedia.org/wiki/Multimodal_interaction" target="_blank" class="tag">Multimodal Interfaces</a>
+          <a href="https://en.wikipedia.org/wiki/Fitts%27s_law" target="_blank" class="tag">Fitts' Law</a>
+          <a href="https://en.wikipedia.org/wiki/Usable_security" target="_blank" class="tag">Human-Centered Security</a>
+          <a href="https://en.wikipedia.org/wiki/Spatial_computing" target="_blank" class="tag">Spatial Computing</a>
+          <a href="https://en.wikipedia.org/wiki/Virtual_reality" target="_blank" class="tag">Virtual Reality</a>
         </div>
       </div>
     </div>
@@ -365,202 +598,78 @@
 
   <div class="divider"></div>
 
-  <!-- PUBLICATIONS -->
-  <section id="publications">
-    <div style="max-width:960px;margin:0 auto 3rem">
-      <p class="section-label">Publications</p>
-      <h2 class="section-heading">Selected Work</h2>
-      <p class="section-sub">Peer-reviewed research in HCI, XR, and gaze-based interaction.</p>
-    </div>
-
-    <div class="pub-grid">
-
-      <!-- Paper 1 -->
-      <a class="pub-tile" href="https://dl.acm.org/doi/10.1145/3698134" target="_blank">
-        <div class="pub-thumb">
-          <!-- Ersetze src mit deinem echten Paper-Screenshot -->
-          <!-- <img src="paper1.jpg" alt="Gaze Wall and Racket teaser"> -->
-          <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
-            <rect width="480" height="270" fill="#1a1a2e"/>
-            <!-- VR environment background -->
-            <rect x="0" y="135" width="480" height="135" fill="#12122a"/>
-            <!-- Grid floor -->
-            <line x1="0" y1="270" x2="240" y2="160" stroke="#2a2a5a" stroke-width="0.8"/>
-            <line x1="96" y1="270" x2="288" y2="160" stroke="#2a2a5a" stroke-width="0.8"/>
-            <line x1="192" y1="270" x2="336" y2="160" stroke="#2a2a5a" stroke-width="0.8"/>
-            <line x1="288" y1="270" x2="384" y2="160" stroke="#2a2a5a" stroke-width="0.8"/>
-            <line x1="384" y1="270" x2="480" y2="160" stroke="#2a2a5a" stroke-width="0.8"/>
-            <line x1="0" y1="200" x2="480" y2="200" stroke="#2a2a5a" stroke-width="0.8"/>
-            <line x1="0" y1="230" x2="480" y2="230" stroke="#2a2a5a" stroke-width="0.8"/>
-            <line x1="0" y1="255" x2="480" y2="255" stroke="#2a2a5a" stroke-width="0.8"/>
-            <!-- Wall plane -->
-            <rect x="120" y="60" width="180" height="130" rx="2" fill="none" stroke="#4a9eff" stroke-width="1.5" opacity="0.7"/>
-            <rect x="120" y="60" width="180" height="130" rx="2" fill="#4a9eff" opacity="0.08"/>
-            <!-- Target dots on wall -->
-            <circle cx="180" cy="110" r="8" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
-            <circle cx="240" cy="130" r="12" fill="none" stroke="#ff6b6b" stroke-width="2"/>
-            <circle cx="240" cy="130" r="3" fill="#ff6b6b"/>
-            <circle cx="285" cy="95" r="8" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
-            <!-- Gaze ray -->
-            <line x1="240" y1="200" x2="240" y2="130" stroke="#ffcc00" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.9"/>
-            <!-- Eye icon -->
-            <ellipse cx="240" cy="208" rx="18" ry="10" fill="none" stroke="#ffcc00" stroke-width="1.5"/>
-            <circle cx="240" cy="208" r="5" fill="#ffcc00" opacity="0.8"/>
-            <!-- Hand ray -->
-            <line x1="360" y1="220" x2="240" y2="130" stroke="#4a9eff" stroke-width="1.5" opacity="0.7"/>
-            <circle cx="360" cy="220" r="6" fill="#4a9eff" opacity="0.5"/>
-            <!-- Label -->
-            <text x="24" y="36" font-family="'Inter',sans-serif" font-size="11" font-weight="600" fill="#4a9eff" letter-spacing="0.1em">GAZE + PLANE</text>
-          </svg>
-          <div class="pub-overlay"><span class="pub-overlay-text">Read Paper →</span></div>
-        </div>
-        <div class="pub-body">
-          <div class="pub-venue-badge">PACM HCI · ISS '24</div>
-          <div class="pub-title-text">Gaze, Wall, and Racket: Combining Gaze and Hand-Controlled Plane for 3D Selection in VR</div>
-          <div class="pub-authors-text">Wagner, U., Jacobsen, A.A., Albrecht, M., Wang, H., Gellersen, H., &amp; Pfeuffer, K.</div>
-          <span class="pub-arrow">ACM DL →</span>
-        </div>
-      </a>
-
-      <!-- Paper 2 -->
-      <a class="pub-tile" href="https://dl.acm.org/doi/10.1145/3654777.3676446" target="_blank">
-        <div class="pub-thumb">
-          <!-- <img src="paper2.jpg" alt="Eye-Hand Movement teaser"> -->
-          <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
-            <rect width="480" height="270" fill="#0d1b0d"/>
-            <!-- Near-space environment -->
-            <rect x="0" y="150" width="480" height="120" fill="#071207"/>
-            <!-- Objects in 3D space -->
-            <rect x="60" y="80" width="70" height="70" rx="6" fill="#1a3a1a" stroke="#2ecc71" stroke-width="1.5"/>
-            <rect x="60" y="80" width="70" height="70" rx="6" fill="#2ecc71" opacity="0.1"/>
-            <rect x="195" y="95" width="70" height="70" rx="6" fill="#1a3a1a" stroke="#2ecc71" stroke-width="1"/>
-            <rect x="195" y="95" width="70" height="70" rx="6" fill="#2ecc71" opacity="0.07"/>
-            <rect x="330" y="70" width="70" height="70" rx="6" fill="#1a3a1a" stroke="#2ecc71" stroke-width="1"/>
-            <!-- Gaze line from eye to object -->
-            <ellipse cx="240" cy="220" rx="24" ry="13" fill="none" stroke="#ffcc00" stroke-width="1.5"/>
-            <circle cx="240" cy="220" r="6" fill="#ffcc00" opacity="0.9"/>
-            <!-- Gaze path curves to target -->
-            <path d="M240 207 Q200 160 95 115" fill="none" stroke="#ffcc00" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.8"/>
-            <!-- Motion trail -->
-            <path d="M95 115 Q150 108 195 130" fill="none" stroke="#2ecc71" stroke-width="2" opacity="0.6"/>
-            <circle cx="195" cy="130" r="4" fill="#2ecc71" opacity="0.8"/>
-            <!-- Hand indicator -->
-            <circle cx="100" cy="200" r="14" fill="none" stroke="#2ecc71" stroke-width="1.5" opacity="0.5"/>
-            <line x1="100" y1="186" x2="100" y2="175" stroke="#2ecc71" stroke-width="1.5" opacity="0.5"/>
-            <line x1="107" y1="188" x2="113" y2="179" stroke="#2ecc71" stroke-width="1.5" opacity="0.5"/>
-            <line x1="93" y1="188" x2="87" y2="179" stroke="#2ecc71" stroke-width="1.5" opacity="0.5"/>
-            <!-- depth lines -->
-            <line x1="60" y1="150" x2="60" y2="165" stroke="#2ecc71" stroke-width="0.8" opacity="0.3"/>
-            <line x1="130" y1="150" x2="130" y2="165" stroke="#2ecc71" stroke-width="0.8" opacity="0.3"/>
-            <text x="24" y="36" font-family="'Inter',sans-serif" font-size="11" font-weight="600" fill="#2ecc71" letter-spacing="0.1em">EYE–HAND DRAG &amp; DROP</text>
-          </svg>
-          <div class="pub-overlay"><span class="pub-overlay-text">Read Paper →</span></div>
-        </div>
-        <div class="pub-body">
-          <div class="pub-venue-badge">UIST '24</div>
-          <div class="pub-title-text">Eye-Hand Movement of Objects in Near Space Extended Realities</div>
-          <div class="pub-authors-text">Wagner, U., Jacobsen, A.A., Feuchtner, T., Gellersen, H., &amp; Pfeuffer, K.</div>
-          <span class="pub-arrow">ACM DL →</span>
-        </div>
-      </a>
-
-      <!-- Paper 3 -->
-      <a class="pub-tile" href="https://dl.acm.org/doi/10.1145/3544548.3581423" target="_blank">
-        <div class="pub-thumb">
-          <!-- <img src="paper3.jpg" alt="Fitts Law Study teaser"> -->
-          <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
-            <rect width="480" height="270" fill="#1a0d2e"/>
-            <!-- Fitts Law curve background -->
-            <path d="M40 230 Q120 80 240 100 Q360 120 440 60" fill="none" stroke="#9b59b6" stroke-width="1.5" opacity="0.3"/>
-            <!-- Target circles at different depths / sizes -->
-            <!-- Depth plane 1 - close, large -->
-            <circle cx="100" cy="170" r="32" fill="none" stroke="#e8e8ff" stroke-width="1.5" opacity="0.4"/>
-            <circle cx="100" cy="170" r="4" fill="#e8e8ff" opacity="0.4"/>
-            <!-- Depth plane 2 - mid -->
-            <circle cx="240" cy="140" r="22" fill="none" stroke="#9b59b6" stroke-width="2" opacity="0.7"/>
-            <circle cx="240" cy="140" r="4" fill="#9b59b6" opacity="0.9"/>
-            <!-- Depth plane 3 - far, small -->
-            <circle cx="370" cy="110" r="14" fill="none" stroke="#e8e8ff" stroke-width="1.5" opacity="0.4"/>
-            <circle cx="370" cy="110" r="3" fill="#e8e8ff" opacity="0.4"/>
-            <!-- Gaze ray to active target -->
-            <line x1="240" y1="220" x2="240" y2="140" stroke="#ffcc00" stroke-width="2" opacity="0.9"/>
-            <!-- Eye -->
-            <ellipse cx="240" cy="228" rx="20" ry="11" fill="none" stroke="#ffcc00" stroke-width="1.5"/>
-            <circle cx="240" cy="228" r="5" fill="#ffcc00"/>
-            <!-- Pinch gesture -->
-            <circle cx="255" cy="228" r="9" fill="none" stroke="#9b59b6" stroke-width="1.5" opacity="0.7"/>
-            <circle cx="255" cy="228" r="3" fill="#9b59b6" opacity="0.7"/>
-            <!-- Amplitude arrows -->
-            <line x1="100" y1="210" x2="240" y2="210" stroke="#4a9eff" stroke-width="1" opacity="0.5" marker-end="url(#arr)"/>
-            <line x1="240" y1="210" x2="370" y2="210" stroke="#4a9eff" stroke-width="1" opacity="0.5"/>
-            <text x="155" y="226" font-family="'Inter',sans-serif" font-size="9" fill="#4a9eff" opacity="0.7" text-anchor="middle">Amplitude</text>
-            <!-- Depth plane lines -->
-            <line x1="100" y1="60" x2="100" y2="250" stroke="#e8e8ff" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.15"/>
-            <line x1="240" y1="60" x2="240" y2="250" stroke="#e8e8ff" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.15"/>
-            <line x1="370" y1="60" x2="370" y2="250" stroke="#e8e8ff" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.15"/>
-            <text x="100" y="52" font-family="'Inter',sans-serif" font-size="9" fill="#e8e8ff" opacity="0.4" text-anchor="middle">0.5m</text>
-            <text x="240" y="52" font-family="'Inter',sans-serif" font-size="9" fill="#e8e8ff" opacity="0.4" text-anchor="middle">1m</text>
-            <text x="370" y="52" font-family="'Inter',sans-serif" font-size="9" fill="#e8e8ff" opacity="0.4" text-anchor="middle">2m</text>
-            <text x="24" y="36" font-family="'Inter',sans-serif" font-size="11" font-weight="600" fill="#9b59b6" letter-spacing="0.1em">FITTS' LAW · 3D SELECTION</text>
-          </svg>
-          <div class="pub-overlay"><span class="pub-overlay-text">Read Paper →</span></div>
-        </div>
-        <div class="pub-body">
-          <div class="pub-venue-badge">CHI '23</div>
-          <div class="pub-title-text">A Fitts' Law Study of Gaze-Hand Alignment for Selection in 3D User Interfaces</div>
-          <div class="pub-authors-text">Wagner, U., Lystbæk, M.N., Manakhov, P., Grønbæk, J.E.S., Pfeuffer, K., &amp; Gellersen, H.</div>
-          <span class="pub-arrow">ACM DL →</span>
-        </div>
-      </a>
-
-    </div>
-
-    <p style="text-align:center;margin-top:1.5rem;font-size:13px;color:var(--gray-mid);font-weight:300">
-      💡 Tipp: Ersetze die SVG-Platzhalter mit echten Paper-Screenshots — einfach <code>src="paper1.jpg"</code> einkommentieren.
-    </p>
-  </section>
-
-  <div class="divider"></div>
-
   <!-- CURRENT RESEARCH -->
   <div class="current-research-wrap">
-  <svg class="bg-svg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-    <!-- Person/human silhouette sitting at desk — learning context -->
-    <!-- Head -->
-    <circle cx="260" cy="130" r="52" fill="none" stroke="#000" stroke-width="6"/>
-    <!-- Body -->
-    <path d="M215 182 Q200 280 205 360" fill="none" stroke="#000" stroke-width="5" stroke-linecap="round"/>
-    <path d="M305 182 Q318 280 313 360" fill="none" stroke="#000" stroke-width="5" stroke-linecap="round"/>
-    <path d="M205 360 L313 360" fill="none" stroke="#000" stroke-width="5"/>
-    <!-- Arms -->
-    <path d="M215 220 Q170 260 155 300" fill="none" stroke="#000" stroke-width="5" stroke-linecap="round"/>
-    <path d="M305 220 Q350 260 365 300" fill="none" stroke="#000" stroke-width="5" stroke-linecap="round"/>
-    <!-- Desk surface -->
-    <line x1="80" y1="310" x2="660" y2="310" stroke="#000" stroke-width="5"/>
-    <!-- Screen/monitor rectangle -->
-    <rect x="400" y="160" width="220" height="140" rx="8" fill="none" stroke="#000" stroke-width="5"/>
-    <!-- Screen content: wavy lines suggesting text/UI -->
-    <line x1="420" y1="190" x2="595" y2="190" stroke="#000" stroke-width="3" opacity="0.5"/>
-    <line x1="420" y1="210" x2="560" y2="210" stroke="#000" stroke-width="3" opacity="0.5"/>
-    <line x1="420" y1="230" x2="580" y2="230" stroke="#000" stroke-width="3" opacity="0.5"/>
-    <line x1="420" y1="250" x2="540" y2="250" stroke="#000" stroke-width="3" opacity="0.5"/>
-    <!-- Screen stand -->
-    <line x1="510" y1="300" x2="510" y2="310" stroke="#000" stroke-width="5"/>
-    <!-- Stress/urgency: small lightning/alert shape near head -->
-    <path d="M330 90 L318 115 L328 115 L316 140" fill="none" stroke="#000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
-    <!-- Floating nodes — AI network hint -->
-    <circle cx="580" cy="80" r="14" fill="none" stroke="#000" stroke-width="3" opacity="0.4"/>
-    <circle cx="650" cy="130" r="10" fill="none" stroke="#000" stroke-width="2.5" opacity="0.35"/>
-    <circle cx="620" cy="50" r="8" fill="none" stroke="#000" stroke-width="2.5" opacity="0.3"/>
-    <line x1="580" y1="80" x2="650" y2="130" stroke="#000" stroke-width="2" opacity="0.25"/>
-    <line x1="580" y1="80" x2="620" y2="50" stroke="#000" stroke-width="2" opacity="0.25"/>
-    <line x1="650" y1="130" x2="620" y2="50" stroke="#000" stroke-width="2" opacity="0.2"/>
+<svg class="bg-svg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <path d="M40.1,0.0 L56.1,35.7 L52.8,71.4 L85.7,107.1 L81.8,142.9 L95.6,178.6 L44.1,214.3 L65.5,250.0 L40.4,285.7 L52.5,321.4 L70.9,357.1 L40.2,392.9 L51.3,428.6 L80.1,464.3 L73.4,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="40.1" cy="0.0" r="1.9" fill="#000" opacity="0.54"/>
+    <circle cx="85.7" cy="107.1" r="3.1" fill="#000" opacity="0.30"/>
+    <circle cx="44.1" cy="214.3" r="3.1" fill="#000" opacity="0.58"/>
+    <circle cx="52.5" cy="321.4" r="2.2" fill="#000" opacity="0.36"/>
+    <circle cx="51.3" cy="428.6" r="3.4" fill="#000" opacity="0.43"/>
+    <text x="57.8" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="49.1" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
+    <text x="75.9" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <path d="M147.9,0.0 L142.8,35.7 L128.7,71.4 L155.3,107.1 L133.9,142.9 L184.9,178.6 L130.9,214.3 L144.7,250.0 L166.1,285.7 L182.6,321.4 L149.0,357.1 L138.2,392.9 L130.3,428.6 L168.2,464.3 L175.4,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="147.9" cy="0.0" r="3.5" fill="#000" opacity="0.64"/>
+    <circle cx="155.3" cy="107.1" r="3.2" fill="#000" opacity="0.45"/>
+    <circle cx="130.9" cy="214.3" r="2.4" fill="#000" opacity="0.63"/>
+    <circle cx="182.6" cy="321.4" r="1.8" fill="#000" opacity="0.44"/>
+    <circle cx="130.3" cy="428.6" r="2.8" fill="#000" opacity="0.58"/>
+    <text x="133.7" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="135.9" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
+    <text x="154.0" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <path d="M245.7,0.0 L284.7,35.7 L262.4,71.4 L257.0,107.1 L265.2,142.9 L275.3,178.6 L271.1,214.3 L236.1,250.0 L223.5,285.7 L241.6,321.4 L238.5,357.1 L234.9,392.9 L281.7,428.6 L277.5,464.3 L241.5,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="245.7" cy="0.0" r="2.8" fill="#000" opacity="0.46"/>
+    <circle cx="257.0" cy="107.1" r="3.3" fill="#000" opacity="0.48"/>
+    <circle cx="271.1" cy="214.3" r="2.0" fill="#000" opacity="0.40"/>
+    <circle cx="241.6" cy="321.4" r="2.6" fill="#000" opacity="0.41"/>
+    <circle cx="281.7" cy="428.6" r="2.7" fill="#000" opacity="0.66"/>
+    <text x="267.4" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
+    <text x="276.1" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
+    <text x="243.5" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <path d="M424.6,0.0 L447.3,35.7 L464.1,71.4 L470.9,107.1 L425.5,142.9 L426.0,178.6 L459.3,214.3 L453.9,250.0 L440.4,285.7 L453.9,321.4 L445.7,357.1 L431.8,392.9 L451.1,428.6 L476.1,464.3 L459.3,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="424.6" cy="0.0" r="1.7" fill="#000" opacity="0.65"/>
+    <circle cx="470.9" cy="107.1" r="3.0" fill="#000" opacity="0.61"/>
+    <circle cx="459.3" cy="214.3" r="2.2" fill="#000" opacity="0.42"/>
+    <circle cx="453.9" cy="321.4" r="1.8" fill="#000" opacity="0.30"/>
+    <circle cx="451.1" cy="428.6" r="2.9" fill="#000" opacity="0.59"/>
+    <text x="469.1" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
+    <text x="464.3" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <text x="450.7" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <path d="M547.6,0.0 L527.8,35.7 L539.0,71.4 L525.4,107.1 L576.1,142.9 L574.1,178.6 L573.9,214.3 L553.4,250.0 L546.4,285.7 L522.2,321.4 L538.3,357.1 L578.1,392.9 L566.7,428.6 L530.4,464.3 L530.5,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="547.6" cy="0.0" r="2.6" fill="#000" opacity="0.33"/>
+    <circle cx="525.4" cy="107.1" r="3.0" fill="#000" opacity="0.63"/>
+    <circle cx="573.9" cy="214.3" r="3.5" fill="#000" opacity="0.51"/>
+    <circle cx="522.2" cy="321.4" r="1.8" fill="#000" opacity="0.56"/>
+    <circle cx="566.7" cy="428.6" r="3.4" fill="#000" opacity="0.37"/>
+    <text x="544.0" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
+    <text x="578.9" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <text x="543.3" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <path d="M642.6,0.0 L660.0,35.7 L640.9,71.4 L674.6,107.1 L645.9,142.9 L632.9,178.6 L621.1,214.3 L618.4,250.0 L652.5,285.7 L654.7,321.4 L617.5,357.1 L662.3,392.9 L620.8,428.6 L621.3,464.3 L619.0,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="642.6" cy="0.0" r="2.2" fill="#000" opacity="0.51"/>
+    <circle cx="674.6" cy="107.1" r="2.1" fill="#000" opacity="0.49"/>
+    <circle cx="621.1" cy="214.3" r="2.6" fill="#000" opacity="0.59"/>
+    <circle cx="654.7" cy="321.4" r="3.3" fill="#000" opacity="0.53"/>
+    <circle cx="620.8" cy="428.6" r="2.0" fill="#000" opacity="0.49"/>
+    <text x="645.9" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
+    <text x="626.1" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <text x="622.5" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
+    <path d="M699.7,0.0 L699.3,35.7 L702.1,71.4 L718.8,107.1 L715.3,142.9 L735.1,178.6 L678.5,214.3 L697.9,250.0 L693.9,285.7 L727.3,321.4 L688.1,357.1 L684.3,392.9 L700.9,428.6 L699.2,464.3 L690.0,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
+    <circle cx="699.7" cy="0.0" r="2.0" fill="#000" opacity="0.67"/>
+    <circle cx="718.8" cy="107.1" r="2.4" fill="#000" opacity="0.64"/>
+    <circle cx="678.5" cy="214.3" r="2.6" fill="#000" opacity="0.32"/>
+    <circle cx="727.3" cy="321.4" r="3.5" fill="#000" opacity="0.63"/>
+    <circle cx="700.9" cy="428.6" r="3.4" fill="#000" opacity="0.67"/>
+    <text x="707.1" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
+    <text x="683.5" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
+    <text x="693.1" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
   </svg>
-  <section>
+  <section id="research">
     <div style="max-width:960px;margin:0 auto 3rem">
       <p class="section-label">Current Research</p>
-      <h2 class="section-heading">What I'm working on now</h2>
-      <p class="section-sub">Ongoing investigations at THD Campus Vilshofen.</p>
+      <h2 class="section-heading">What I'm working on</h2>
+      <p class="section-sub">Ongoing investigations at <a href="https://www.th-deg.de/tc-vilshofen" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,0,0,0.3)">Deggendorf Institute of Technology · Campus Vilshofen</a>.</p>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(0,0,0,0.08);max-width:960px;margin:0 auto">
 
@@ -586,18 +695,201 @@
 
   <div class="divider"></div>
 
+    <!-- PUBLICATIONS -->
+  <section id="publications">
+    <div style="max-width:960px;margin:0 auto 3rem">
+      <p class="section-label">Past Research · Publications</p>
+      <h2 class="section-heading">Publications</h2>
+      <p class="section-sub">Peer-reviewed research in HCI, extended reality, and gaze-based interaction.</p>
+    </div>
+
+    <div class="carousel-scene" id="carouselScene">
+      <div class="carousel-orbit" id="pubOrbit">
+
+        <a class="pub-card" href="https://dl.acm.org/doi/10.1145/3698134" target="_blank">
+          <div class="pub-card-venue">PACM HCI · ISS 2024</div>
+          <div class="pub-card-title">Gaze, Wall, and Racket: Combining Gaze and Hand-Controlled Plane for 3D Selection in VR</div>
+          <div class="pub-card-authors">Wagner, U., Albrecht, M., Jacobsen, A.A., Wang, H., Gellersen, H., &amp; Pfeuffer, K.</div>
+          <span class="pub-card-link">ACM DL →</span>
+        </a>
+
+        <a class="pub-card" href="https://dl.acm.org/doi/10.1145/3654777.3676446" target="_blank">
+          <div class="pub-card-venue">ACM UIST 2024</div>
+          <div class="pub-card-title">Eye-Hand Movement of Objects in Near Space Extended Realities</div>
+          <div class="pub-card-authors">Wagner, U., Jacobsen, A.A., Feuchtner, T., Gellersen, H., &amp; Pfeuffer, K.</div>
+          <span class="pub-card-link">ACM DL →</span>
+        </a>
+
+        <a class="pub-card" href="https://dl.acm.org/doi/10.1145/3544548.3581423" target="_blank">
+          <div class="pub-card-venue">ACM CHI 2023</div>
+          <div class="pub-card-title">A Fitts' Law Study of Gaze-Hand Alignment for Selection in 3D User Interfaces</div>
+          <div class="pub-card-authors">Wagner, U., Lystbæk, M.N., Manakhov, P., Grønbæk, J.E.S., Pfeuffer, K., &amp; Gellersen, H.</div>
+          <span class="pub-card-link">ACM DL →</span>
+        </a>
+
+        <a class="pub-card" href="https://ieeexplore.ieee.org/abstract/document/11220348" target="_blank">
+          <div class="pub-card-venue">IEEE ISMAR 2025</div>
+          <div class="pub-card-title">A Study of Multimodal Pen + Gaze Interaction Techniques for Shape Point Translation in Extended Reality</div>
+          <div class="pub-card-authors">Wagner, U., Kim, J., Wu, Z., Zhou, Q., Romero, M., Iop, A., Feuchtner, T., &amp; Pfeuffer, K.</div>
+          <span class="pub-card-link">IEEE Xplore →</span>
+        </a>
+
+        <a class="pub-card" href="https://ieeexplore.ieee.org/abstract/document/11236274" target="_blank">
+          <div class="pub-card-venue">IEEE ISMAR-Adjunct 2025</div>
+          <div class="pub-card-title">Eyes on Target, Pen on Table: Precise VR Interaction with Gaze and Pen</div>
+          <div class="pub-card-authors">Wagner, U. et al.</div>
+          <span class="pub-card-link">IEEE Xplore →</span>
+        </a>
+
+        <a class="pub-card" href="https://pure.au.dk/portal/en/publications/eye-hand-input-in-3d/" target="_blank">
+          <div class="pub-card-venue">PhD Thesis · Aarhus University 2024</div>
+          <div class="pub-card-title">Eye-Hand Input in 3D</div>
+          <div class="pub-card-authors">Wagner, U.</div>
+          <span class="pub-card-link">View Thesis →</span>
+        </a>
+
+      </div>
+      <div class="carousel-center">
+      <img src="teaser.png" alt="Gaze and hand interaction in XR">
+    </div>
+    </div>
+
+    <div class="carousel-btns">
+      <button class="carousel-btn" onclick="spinOrbit(-1)">&#8592;</button>
+      <button class="carousel-btn" onclick="spinOrbit(1)">&#8594;</button>
+    </div>
+    <p class="carousel-hint">Rotate to browse · click to open</p>
+
+    <script>
+    (function(){
+      const orbit  = document.getElementById('pubOrbit');
+      const scene  = document.getElementById('carouselScene');
+      const cards  = Array.from(orbit.querySelectorAll('.pub-card'));
+      const N      = cards.length;
+      let angle    = 0;          // current rotation of the whole ring (degrees)
+
+      function layout() {
+        const W = scene.offsetWidth;
+        const R = W * 0.46;      // orbit radius
+        const CX = W / 2;
+        const CY = W / 2;
+
+        cards.forEach((card, i) => {
+          const theta = (2 * Math.PI * i / N) - Math.PI / 2; // start top
+          const cx = CX + R * Math.cos(theta + angle * Math.PI / 180);
+          const cy = CY + R * Math.sin(theta + angle * Math.PI / 180);
+          card.style.left  = (cx - card.offsetWidth  / 2) + 'px';
+          card.style.top   = (cy - card.offsetHeight / 2) + 'px';
+          // active = topmost card (closest to top)
+          const isActive = Math.abs(Math.sin(theta + angle * Math.PI / 180) + 1) < 0.25;
+          card.classList.toggle('active', isActive);
+        });
+      }
+
+      window.spinOrbit = function(dir) {
+        angle += dir * (360 / N);
+        // animate via requestAnimationFrame
+        const target = angle;
+        const start  = angle - dir * (360 / N);
+        const dur    = 600;
+        const t0     = performance.now();
+
+        function step(now) {
+          const p = Math.min((now - t0) / dur, 1);
+          const ease = 1 - Math.pow(1 - p, 3);
+          const a = start + (target - start) * ease;
+          // temporarily set angle for layout
+          angle = a;
+          layout();
+          if (p < 1) requestAnimationFrame(step);
+          else angle = target;
+        }
+        requestAnimationFrame(step);
+      };
+
+      // Drag / swipe
+      let drag = null;
+      scene.addEventListener('mousedown',  e => { drag = e.clientX; e.preventDefault(); });
+      window.addEventListener('mousemove', e => {
+        if (drag === null) return;
+        const dx = e.clientX - drag;
+        if (Math.abs(dx) > 35) { spinOrbit(dx > 0 ? 1 : -1); drag = e.clientX; }
+      });
+      window.addEventListener('mouseup',   () => { drag = null; });
+      scene.addEventListener('touchstart', e => { drag = e.touches[0].clientX; }, {passive:true});
+      scene.addEventListener('touchmove',  e => {
+        if (drag === null) return;
+        const dx = e.touches[0].clientX - drag;
+        if (Math.abs(dx) > 35) { spinOrbit(dx > 0 ? 1 : -1); drag = e.touches[0].clientX; }
+      }, {passive:true});
+      scene.addEventListener('touchend',   () => { drag = null; });
+
+      // Initial layout + relayout on resize
+      layout();
+      window.addEventListener('resize', layout);
+    })();
+    </script>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- CONTACT -->
   <section class="contact-section" id="contact">
-  <svg class="bg-svg" viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-    <!-- Eye -->
-    <ellipse cx="350" cy="200" rx="290" ry="150" fill="none" stroke="#fff" stroke-width="6"/>
-    <circle cx="350" cy="200" r="85" fill="none" stroke="#fff" stroke-width="5"/>
-    <circle cx="350" cy="200" r="36" fill="#fff" opacity="0.6"/>
-    <!-- Gaze ray to hand -->
-    <line x1="350" y1="200" x2="350" y2="380" stroke="#fff" stroke-width="2" stroke-dasharray="7,5" opacity="0.5"/>
-    <!-- Hand pinch hint -->
-    <circle cx="350" cy="390" rx="30" fill="none" stroke="#fff" stroke-width="3" opacity="0.4" r="28"/>
-    <circle cx="350" cy="390" r="8" fill="#fff" opacity="0.35"/>
+<svg class="bg-svg" viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <path d="M43.4,0.0 L57.4,35.7 L54.5,71.4 L83.3,107.1 L79.9,142.9 L92.0,178.6 L46.9,214.3 L65.7,250.0 L43.7,285.7 L54.3,321.4 L70.3,357.1 L43.5,392.9 L53.2,428.6 L78.4,464.3 L72.6,500.0" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
+    <circle cx="43.4" cy="0.0" r="1.9" fill="#fff" opacity="0.54"/>
+    <circle cx="83.3" cy="107.1" r="3.1" fill="#fff" opacity="0.30"/>
+    <circle cx="46.9" cy="214.3" r="3.1" fill="#fff" opacity="0.58"/>
+    <circle cx="54.3" cy="321.4" r="2.2" fill="#fff" opacity="0.36"/>
+    <circle cx="53.2" cy="428.6" r="3.4" fill="#fff" opacity="0.43"/>
+    <text x="59.5" y="71.4" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">10</text>
+    <text x="51.9" y="214.3" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">0xA</text>
+    <text x="75.3" y="357.1" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">10</text>
+    <path d="M154.4,0.0 L150.0,35.7 L137.6,71.4 L160.9,107.1 L142.1,142.9 L186.8,178.6 L139.6,214.3 L151.6,250.0 L170.4,285.7 L184.7,321.4 L155.4,357.1 L145.9,392.9 L139.0,428.6 L172.2,464.3 L178.4,500.0" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
+    <circle cx="154.4" cy="0.0" r="3.5" fill="#fff" opacity="0.64"/>
+    <circle cx="160.9" cy="107.1" r="3.2" fill="#fff" opacity="0.45"/>
+    <circle cx="139.6" cy="214.3" r="2.4" fill="#fff" opacity="0.63"/>
+    <circle cx="184.7" cy="321.4" r="1.8" fill="#fff" opacity="0.44"/>
+    <circle cx="139.0" cy="428.6" r="2.8" fill="#fff" opacity="0.58"/>
+    <text x="142.6" y="71.4" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">10</text>
+    <text x="144.6" y="214.3" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">0x1F</text>
+    <text x="160.4" y="357.1" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">FF</text>
+    <path d="M256.6,0.0 L290.8,35.7 L271.2,71.4 L266.6,107.1 L273.7,142.9 L282.6,178.6 L278.8,214.3 L248.2,250.0 L237.2,285.7 L253.1,321.4 L250.4,357.1 L247.2,392.9 L288.2,428.6 L284.5,464.3 L253.0,500.0" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
+    <circle cx="256.6" cy="0.0" r="2.8" fill="#fff" opacity="0.46"/>
+    <circle cx="266.6" cy="107.1" r="3.3" fill="#fff" opacity="0.48"/>
+    <circle cx="278.8" cy="214.3" r="2.0" fill="#fff" opacity="0.40"/>
+    <circle cx="253.1" cy="321.4" r="2.6" fill="#fff" opacity="0.41"/>
+    <circle cx="288.2" cy="428.6" r="2.7" fill="#fff" opacity="0.66"/>
+    <text x="276.2" y="71.4" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">0xA</text>
+    <text x="283.8" y="214.3" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">01</text>
+    <text x="255.4" y="357.1" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">FF</text>
+    <path d="M429.9,0.0 L449.7,35.7 L464.4,71.4 L470.3,107.1 L430.7,142.9 L431.1,178.6 L460.2,214.3 L455.5,250.0 L443.7,285.7 L455.5,321.4 L448.3,357.1 L436.2,392.9 L453.1,428.6 L474.9,464.3 L460.2,500.0" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
+    <circle cx="429.9" cy="0.0" r="1.7" fill="#fff" opacity="0.65"/>
+    <circle cx="470.3" cy="107.1" r="3.0" fill="#fff" opacity="0.61"/>
+    <circle cx="460.2" cy="214.3" r="2.2" fill="#fff" opacity="0.42"/>
+    <circle cx="455.5" cy="321.4" r="1.8" fill="#fff" opacity="0.30"/>
+    <circle cx="453.1" cy="428.6" r="2.9" fill="#fff" opacity="0.59"/>
+    <text x="469.4" y="71.4" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">0x1F</text>
+    <text x="465.2" y="214.3" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">10</text>
+    <text x="453.3" y="357.1" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">10</text>
+    <path d="M554.1,0.0 L536.8,35.7 L546.6,71.4 L534.7,107.1 L579.1,142.9 L577.4,178.6 L577.1,214.3 L559.2,250.0 L553.1,285.7 L532.0,321.4 L546.0,357.1 L580.9,392.9 L570.9,428.6 L539.1,464.3 L539.2,500.0" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
+    <circle cx="554.1" cy="0.0" r="2.6" fill="#fff" opacity="0.33"/>
+    <circle cx="534.7" cy="107.1" r="3.0" fill="#fff" opacity="0.63"/>
+    <circle cx="577.1" cy="214.3" r="3.5" fill="#fff" opacity="0.51"/>
+    <circle cx="532.0" cy="321.4" r="1.8" fill="#fff" opacity="0.56"/>
+    <circle cx="570.9" cy="428.6" r="3.4" fill="#fff" opacity="0.37"/>
+    <text x="551.6" y="71.4" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">0xA</text>
+    <text x="582.1" y="214.3" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">FF</text>
+    <text x="551.0" y="357.1" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">FF</text>
+    <path d="M653.9,0.0 L669.2,35.7 L652.5,71.4 L681.9,107.1 L656.8,142.9 L645.4,178.6 L635.1,214.3 L632.7,250.0 L662.6,285.7 L664.5,321.4 L632.0,357.1 L671.2,392.9 L634.9,428.6 L635.3,464.3 L633.3,500.0" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
+    <circle cx="653.9" cy="0.0" r="2.2" fill="#fff" opacity="0.51"/>
+    <circle cx="681.9" cy="107.1" r="2.1" fill="#fff" opacity="0.49"/>
+    <circle cx="635.1" cy="214.3" r="2.6" fill="#fff" opacity="0.59"/>
+    <circle cx="664.5" cy="321.4" r="3.3" fill="#fff" opacity="0.53"/>
+    <circle cx="634.9" cy="428.6" r="2.0" fill="#fff" opacity="0.49"/>
+    <text x="657.5" y="71.4" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">0xA</text>
+    <text x="640.1" y="214.3" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">FF</text>
+    <text x="637.0" y="357.1" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">10</text>
   </svg>
     <p class="section-label">Contact</p>
     <h2 class="contact-headline">Different problems,<br>same instinct —<br><em>observe first.</em></h2>
