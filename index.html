@@ -280,52 +280,6 @@
     .contact-link:hover { background: var(--blue); color: var(--white); }
     .contact-email { font-size: 16px; font-weight: 300; color: #a1a1a6; margin-top: 2.5rem; }
 
-    /* BACKGROUND VISUALS */
-    .hero-wrap { position: relative; overflow: hidden; }
-    .hero-wrap .bg-svg { position: absolute; top: 0; right: 0; width: 65%; height: 100%; opacity: 0.06; pointer-events: none; }
-    .about-bg { position: relative; overflow: hidden; background: rgba(245,245,247,0.7) !important; backdrop-filter: blur(0px); }
-    .about-bg .bg-svg { position: absolute; bottom: -60px; right: -40px; width: 42%; height: 110%; opacity: 0.05; pointer-events: none; }
-    .current-research-wrap { position: relative; overflow: hidden; }
-    .current-research-wrap .bg-svg { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80%; height: 130%; opacity: 0.045; pointer-events: none; }
-    .contact-section { position: relative; overflow: hidden; }
-    .contact-section .bg-svg { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80%; height: 140%; opacity: 0.1; pointer-events: none; }
-
-    /* DATA STREAM ANIMATIONS */
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 0.15; }
-      50%       { opacity: 0.75; }
-    }
-    @keyframes pulse-line {
-      0%, 100% { opacity: 0.03; }
-      50%       { opacity: 0.1; }
-    }
-    @keyframes pulse-text {
-      0%, 100% { opacity: 0.1; }
-      50%       { opacity: 0.45; }
-    }
-    .bg-svg circle {
-      animation: pulse-dot 2.4s ease-in-out infinite;
-    }
-    .bg-svg path {
-      animation: pulse-line 3s ease-in-out infinite;
-    }
-    .bg-svg text {
-      animation: pulse-text 2.8s ease-in-out infinite;
-    }
-    /* Stagger each element so they don't all pulse together */
-    .bg-svg circle:nth-child(3n)   { animation-delay: 0s; }
-    .bg-svg circle:nth-child(3n+1) { animation-delay: 0.6s; }
-    .bg-svg circle:nth-child(3n+2) { animation-delay: 1.2s; }
-    .bg-svg path:nth-child(4n)     { animation-delay: 0s; }
-    .bg-svg path:nth-child(4n+1)   { animation-delay: 0.8s; }
-    .bg-svg path:nth-child(4n+2)   { animation-delay: 1.6s; }
-    .bg-svg path:nth-child(4n+3)   { animation-delay: 2.4s; }
-    .bg-svg text:nth-child(5n)     { animation-delay: 0s; }
-    .bg-svg text:nth-child(5n+1)   { animation-delay: 0.5s; }
-    .bg-svg text:nth-child(5n+2)   { animation-delay: 1.0s; }
-    .bg-svg text:nth-child(5n+3)   { animation-delay: 1.5s; }
-    .bg-svg text:nth-child(5n+4)   { animation-delay: 2.0s; }
-
     /* RESPONSIVE */
     @media (max-width: 768px) {
       nav { padding: 0 1.5rem; }
@@ -336,7 +290,7 @@
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .pub-grid { grid-template-columns: 1fr; gap: 1rem; }
       .contact-section { padding: 5rem 1.5rem; }
-      .hero-wrap .bg-svg { opacity: 0.025; }
+
     }
   </style>
 </head>
@@ -353,113 +307,6 @@
   </nav>
 
   <!-- HERO -->
-  <div class="hero-wrap">
-<svg class="bg-svg" viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-    <path d="M33.0,0.0 L49.0,45.0 L45.7,90.0 L78.5,135.0 L74.7,180.0 L88.5,225.0 L36.9,270.0 L58.4,315.0 L33.3,360.0 L45.4,405.0 L63.7,450.0 L33.1,495.0 L44.1,540.0 L73.0,585.0 L66.3,630.0 L45.5,675.0 L69.1,720.0 L83.2,765.0 L31.8,810.0 L83.0,855.0 L76.1,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="33.0" cy="0.0" r="2.2" fill="#000" opacity="0.36"/>
-    <circle cx="78.5" cy="135.0" r="3.4" fill="#000" opacity="0.43"/>
-    <circle cx="36.9" cy="270.0" r="1.7" fill="#000" opacity="0.34"/>
-    <circle cx="45.4" cy="405.0" r="3.2" fill="#000" opacity="0.54"/>
-    <circle cx="44.1" cy="540.0" r="3.1" fill="#000" opacity="0.59"/>
-    <circle cx="45.5" cy="675.0" r="2.6" fill="#000" opacity="0.69"/>
-    <circle cx="31.8" cy="810.0" r="2.3" fill="#000" opacity="0.52"/>
-    <text x="50.7" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="41.9" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <text x="68.7" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="71.3" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="36.8" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <path d="M207.3,0.0 L199.0,45.0 L199.7,90.0 L168.5,135.0 L173.2,180.0 L197.6,225.0 L154.6,270.0 L167.0,315.0 L187.1,360.0 L189.1,405.0 L188.0,450.0 L148.8,495.0 L184.9,540.0 L178.4,585.0 L159.9,630.0 L173.8,675.0 L161.5,720.0 L203.4,765.0 L188.3,810.0 L158.3,855.0 L165.0,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="207.3" cy="0.0" r="3.0" fill="#000" opacity="0.32"/>
-    <circle cx="168.5" cy="135.0" r="3.1" fill="#000" opacity="0.62"/>
-    <circle cx="154.6" cy="270.0" r="2.3" fill="#000" opacity="0.33"/>
-    <circle cx="189.1" cy="405.0" r="3.3" fill="#000" opacity="0.53"/>
-    <circle cx="184.9" cy="540.0" r="2.9" fill="#000" opacity="0.39"/>
-    <circle cx="173.8" cy="675.0" r="2.5" fill="#000" opacity="0.65"/>
-    <circle cx="188.3" cy="810.0" r="2.8" fill="#000" opacity="0.36"/>
-    <text x="204.7" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
-    <text x="159.6" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <text x="193.0" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="164.9" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
-    <text x="193.3" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
-    <path d="M268.6,0.0 L213.6,45.0 L236.3,90.0 L253.1,135.0 L259.9,180.0 L214.5,225.0 L215.0,270.0 L248.3,315.0 L242.9,360.0 L229.4,405.0 L242.9,450.0 L234.7,495.0 L220.8,540.0 L240.2,585.0 L265.1,630.0 L248.3,675.0 L212.1,720.0 L261.4,765.0 L252.8,810.0 L253.9,855.0 L226.5,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="268.6" cy="0.0" r="2.1" fill="#000" opacity="0.36"/>
-    <circle cx="253.1" cy="135.0" r="1.5" fill="#000" opacity="0.59"/>
-    <circle cx="215.0" cy="270.0" r="2.9" fill="#000" opacity="0.69"/>
-    <circle cx="229.4" cy="405.0" r="3.0" fill="#000" opacity="0.50"/>
-    <circle cx="220.8" cy="540.0" r="1.7" fill="#000" opacity="0.55"/>
-    <circle cx="248.3" cy="675.0" r="3.2" fill="#000" opacity="0.50"/>
-    <circle cx="252.8" cy="810.0" r="1.9" fill="#000" opacity="0.45"/>
-    <text x="241.3" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
-    <text x="220.0" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="247.9" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="270.1" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
-    <text x="257.8" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <path d="M304.0,0.0 L343.8,45.0 L332.4,90.0 L296.1,135.0 L296.2,180.0 L317.1,225.0 L285.8,270.0 L327.6,315.0 L333.0,360.0 L343.3,405.0 L314.8,450.0 L288.8,495.0 L323.0,540.0 L341.3,585.0 L291.3,630.0 L314.5,675.0 L319.6,720.0 L342.5,765.0 L340.2,810.0 L329.1,855.0 L324.9,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="304.0" cy="0.0" r="2.9" fill="#000" opacity="0.46"/>
-    <circle cx="296.1" cy="135.0" r="2.8" fill="#000" opacity="0.45"/>
-    <circle cx="285.8" cy="270.0" r="3.3" fill="#000" opacity="0.48"/>
-    <circle cx="343.3" cy="405.0" r="2.0" fill="#000" opacity="0.33"/>
-    <circle cx="323.0" cy="540.0" r="1.5" fill="#000" opacity="0.52"/>
-    <circle cx="314.5" cy="675.0" r="2.7" fill="#000" opacity="0.30"/>
-    <circle cx="340.2" cy="810.0" r="2.9" fill="#000" opacity="0.32"/>
-    <text x="337.4" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="290.8" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="319.8" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="296.3" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="345.2" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <path d="M427.8,0.0 L431.2,45.0 L443.0,90.0 L453.2,135.0 L433.6,180.0 L412.3,225.0 L427.0,270.0 L422.8,315.0 L402.8,360.0 L438.9,405.0 L419.4,450.0 L423.0,495.0 L452.0,540.0 L400.2,585.0 L438.6,630.0 L438.1,675.0 L400.6,720.0 L443.3,765.0 L448.0,810.0 L403.7,855.0 L409.0,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="427.8" cy="0.0" r="2.6" fill="#000" opacity="0.36"/>
-    <circle cx="453.2" cy="135.0" r="1.9" fill="#000" opacity="0.49"/>
-    <circle cx="427.0" cy="270.0" r="3.2" fill="#000" opacity="0.33"/>
-    <circle cx="438.9" cy="405.0" r="3.1" fill="#000" opacity="0.64"/>
-    <circle cx="452.0" cy="540.0" r="1.7" fill="#000" opacity="0.56"/>
-    <circle cx="438.1" cy="675.0" r="2.6" fill="#000" opacity="0.31"/>
-    <circle cx="448.0" cy="810.0" r="1.7" fill="#000" opacity="0.60"/>
-    <text x="448.0" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <text x="432.0" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
-    <text x="424.4" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
-    <text x="443.6" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
-    <text x="453.0" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
-    <path d="M516.2,0.0 L494.3,45.0 L514.8,90.0 L553.6,135.0 L507.5,180.0 L540.7,225.0 L519.6,270.0 L517.6,315.0 L551.8,360.0 L554.2,405.0 L526.1,450.0 L536.5,495.0 L500.4,540.0 L509.5,585.0 L552.5,630.0 L527.6,675.0 L525.2,720.0 L538.4,765.0 L494.2,810.0 L527.9,855.0 L522.7,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="516.2" cy="0.0" r="3.2" fill="#000" opacity="0.36"/>
-    <circle cx="553.6" cy="135.0" r="3.4" fill="#000" opacity="0.33"/>
-    <circle cx="519.6" cy="270.0" r="1.9" fill="#000" opacity="0.54"/>
-    <circle cx="554.2" cy="405.0" r="2.9" fill="#000" opacity="0.39"/>
-    <circle cx="500.4" cy="540.0" r="1.7" fill="#000" opacity="0.66"/>
-    <circle cx="527.6" cy="675.0" r="2.0" fill="#000" opacity="0.54"/>
-    <circle cx="494.2" cy="810.0" r="2.7" fill="#000" opacity="0.47"/>
-    <text x="519.8" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="524.6" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="531.1" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <text x="557.5" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="499.2" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <path d="M603.9,0.0 L636.8,45.0 L624.8,90.0 L655.0,135.0 L655.4,180.0 L596.1,225.0 L635.3,270.0 L631.5,315.0 L601.9,360.0 L629.9,405.0 L627.9,450.0 L604.0,495.0 L617.8,540.0 L599.9,585.0 L611.1,630.0 L613.7,675.0 L623.5,720.0 L630.3,765.0 L614.9,810.0 L658.5,855.0 L647.2,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="603.9" cy="0.0" r="2.6" fill="#000" opacity="0.57"/>
-    <circle cx="655.0" cy="135.0" r="2.6" fill="#000" opacity="0.67"/>
-    <circle cx="635.3" cy="270.0" r="1.7" fill="#000" opacity="0.65"/>
-    <circle cx="629.9" cy="405.0" r="2.0" fill="#000" opacity="0.66"/>
-    <circle cx="617.8" cy="540.0" r="3.0" fill="#000" opacity="0.36"/>
-    <circle cx="613.7" cy="675.0" r="2.1" fill="#000" opacity="0.38"/>
-    <circle cx="614.9" cy="810.0" r="2.2" fill="#000" opacity="0.57"/>
-    <text x="629.8" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="640.3" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
-    <text x="632.9" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="616.1" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="619.9" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <path d="M784.0,0.0 L733.7,45.0 L752.2,90.0 L739.3,135.0 L793.6,180.0 L741.2,225.0 L759.2,270.0 L776.1,315.0 L766.8,360.0 L738.1,405.0 L791.4,450.0 L775.1,495.0 L740.4,540.0 L733.2,585.0 L754.5,630.0 L766.3,675.0 L758.4,720.0 L733.6,765.0 L754.2,810.0 L790.6,855.0 L793.1,900.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="784.0" cy="0.0" r="1.6" fill="#000" opacity="0.44"/>
-    <circle cx="739.3" cy="135.0" r="2.9" fill="#000" opacity="0.57"/>
-    <circle cx="759.2" cy="270.0" r="2.2" fill="#000" opacity="0.52"/>
-    <circle cx="738.1" cy="405.0" r="3.2" fill="#000" opacity="0.69"/>
-    <circle cx="740.4" cy="540.0" r="3.0" fill="#000" opacity="0.67"/>
-    <circle cx="766.3" cy="675.0" r="2.0" fill="#000" opacity="0.37"/>
-    <circle cx="754.2" cy="810.0" r="3.1" fill="#000" opacity="0.37"/>
-    <text x="757.2" y="90.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
-    <text x="764.2" y="270.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="796.4" y="450.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
-    <text x="759.5" y="630.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="759.2" y="810.0" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
-  </svg>
   <div class="hero">
     <div class="hero-text">
       <p class="eyebrow">HCI Researcher · XR · Gaze &amp; Multimodal Interaction</p>
@@ -471,75 +318,17 @@
       </div>
     </div>
     <div class="hero-video">
-      <video autoplay muted loop playsinline>
+      <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;border-radius:18px;">
         <source src="uist24a-sub3907-cam-i36.mp4" type="video/mp4">
       </video>
       <div class="hero-video-label">Eye-Hand Movement of Objects in Near Space · UIST 2024</div>
     </div>
   </div>
-  </div><!-- /hero-wrap -->
 
   <div class="divider"></div>
 
   <!-- ABOUT -->
   <section class="about-bg" id="about">
-<svg class="bg-svg" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-    <path d="M39.4,0.0 L49.4,43.8 L47.3,87.5 L67.8,131.2 L65.4,175.0 L74.1,218.8 L41.8,262.5 L55.2,306.2 L39.6,350.0 L47.1,393.8 L58.6,437.5 L39.4,481.2 L46.3,525.0 L64.4,568.8 L60.2,612.5 L47.2,656.2 L61.9,700.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="39.4" cy="0.0" r="3.1" fill="#000" opacity="0.30"/>
-    <circle cx="67.8" cy="131.2" r="3.1" fill="#000" opacity="0.58"/>
-    <circle cx="41.8" cy="262.5" r="2.2" fill="#000" opacity="0.36"/>
-    <circle cx="47.1" cy="393.8" r="3.4" fill="#000" opacity="0.43"/>
-    <circle cx="46.3" cy="525.0" r="1.7" fill="#000" opacity="0.34"/>
-    <circle cx="47.2" cy="656.2" r="3.2" fill="#000" opacity="0.54"/>
-    <text x="52.3" y="87.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="46.8" y="262.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
-    <text x="63.6" y="437.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="65.2" y="612.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
-    <path d="M116.5,0.0 L129.9,43.8 L140.1,87.5 L119.2,131.2 L112.4,175.0 L107.5,218.8 L131.2,262.5 L135.7,306.2 L144.1,350.0 L138.9,393.8 L139.4,437.5 L119.9,481.2 L122.9,525.0 L138.1,568.8 L111.2,612.5 L118.9,656.2 L131.5,700.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="116.5" cy="0.0" r="2.9" fill="#000" opacity="0.57"/>
-    <circle cx="119.2" cy="131.2" r="1.6" fill="#000" opacity="0.55"/>
-    <circle cx="131.2" cy="262.5" r="2.6" fill="#000" opacity="0.40"/>
-    <circle cx="138.9" cy="393.8" r="2.4" fill="#000" opacity="0.41"/>
-    <circle cx="122.9" cy="525.0" r="3.4" fill="#000" opacity="0.58"/>
-    <circle cx="118.9" cy="656.2" r="1.9" fill="#000" opacity="0.43"/>
-    <text x="145.1" y="87.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="136.2" y="262.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <text x="144.4" y="437.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="116.2" y="612.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <path d="M226.7,0.0 L260.6,43.8 L246.8,87.5 L252.8,131.2 L232.6,175.0 L244.0,218.8 L259.5,262.5 L249.8,306.2 L229.8,350.0 L229.7,393.8 L253.9,437.5 L245.6,481.2 L254.0,525.0 L241.2,568.8 L247.4,612.5 L238.5,656.2 L264.0,700.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="226.7" cy="0.0" r="1.8" fill="#000" opacity="0.50"/>
-    <circle cx="252.8" cy="131.2" r="3.0" fill="#000" opacity="0.64"/>
-    <circle cx="259.5" cy="262.5" r="1.8" fill="#000" opacity="0.36"/>
-    <circle cx="229.7" cy="393.8" r="2.9" fill="#000" opacity="0.54"/>
-    <circle cx="254.0" cy="525.0" r="2.3" fill="#000" opacity="0.54"/>
-    <circle cx="238.5" cy="656.2" r="2.4" fill="#000" opacity="0.40"/>
-    <text x="251.8" y="87.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="264.5" y="262.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="258.9" y="437.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="252.4" y="612.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <path d="M324.1,0.0 L324.8,43.8 L344.8,87.5 L341.7,131.2 L317.2,175.0 L326.7,218.8 L313.8,262.5 L343.2,306.2 L341.5,350.0 L318.6,393.8 L332.3,437.5 L331.1,481.2 L312.8,525.0 L337.2,568.8 L328.3,612.5 L337.8,656.2 L327.9,700.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="324.1" cy="0.0" r="1.5" fill="#000" opacity="0.43"/>
-    <circle cx="341.7" cy="131.2" r="1.5" fill="#000" opacity="0.67"/>
-    <circle cx="313.8" cy="262.5" r="3.3" fill="#000" opacity="0.63"/>
-    <circle cx="318.6" cy="393.8" r="2.1" fill="#000" opacity="0.32"/>
-    <circle cx="312.8" cy="525.0" r="3.3" fill="#000" opacity="0.68"/>
-    <circle cx="337.8" cy="656.2" r="1.7" fill="#000" opacity="0.49"/>
-    <text x="349.8" y="87.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="318.8" y="262.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
-    <text x="337.3" y="437.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
-    <text x="333.3" y="612.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
-    <path d="M463.4,0.0 L477.9,43.8 L481.1,87.5 L495.4,131.2 L494.0,175.0 L487.0,218.8 L484.4,262.5 L485.3,306.2 L472.8,350.0 L483.7,393.8 L471.7,437.5 L492.8,481.2 L474.9,525.0 L466.7,568.8 L459.4,612.5 L457.7,656.2 L479.0,700.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="463.4" cy="0.0" r="2.7" fill="#000" opacity="0.30"/>
-    <circle cx="495.4" cy="131.2" r="2.9" fill="#000" opacity="0.32"/>
-    <circle cx="484.4" cy="262.5" r="1.6" fill="#000" opacity="0.31"/>
-    <circle cx="483.7" cy="393.8" r="2.2" fill="#000" opacity="0.51"/>
-    <circle cx="474.9" cy="525.0" r="2.1" fill="#000" opacity="0.49"/>
-    <circle cx="457.7" cy="656.2" r="2.6" fill="#000" opacity="0.59"/>
-    <text x="486.1" y="87.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
-    <text x="489.4" y="262.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <text x="476.7" y="437.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">11</text>
-    <text x="464.4" y="612.5" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
-  </svg>
     <div class="about-grid">
       <div>
         <img src="IMG-20260319-WA0032.jpg" alt="Dr. Uta Wagner" style="width:160px;height:160px;border-radius:50%;object-fit:cover;object-position:center top;margin-bottom:1.5rem;display:block;">
@@ -600,72 +389,6 @@
   <div class="divider"></div>
 
   <!-- CURRENT RESEARCH -->
-  <div class="current-research-wrap">
-<svg class="bg-svg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-    <path d="M40.1,0.0 L56.1,35.7 L52.8,71.4 L85.7,107.1 L81.8,142.9 L95.6,178.6 L44.1,214.3 L65.5,250.0 L40.4,285.7 L52.5,321.4 L70.9,357.1 L40.2,392.9 L51.3,428.6 L80.1,464.3 L73.4,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="40.1" cy="0.0" r="1.9" fill="#000" opacity="0.54"/>
-    <circle cx="85.7" cy="107.1" r="3.1" fill="#000" opacity="0.30"/>
-    <circle cx="44.1" cy="214.3" r="3.1" fill="#000" opacity="0.58"/>
-    <circle cx="52.5" cy="321.4" r="2.2" fill="#000" opacity="0.36"/>
-    <circle cx="51.3" cy="428.6" r="3.4" fill="#000" opacity="0.43"/>
-    <text x="57.8" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="49.1" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
-    <text x="75.9" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <path d="M147.9,0.0 L142.8,35.7 L128.7,71.4 L155.3,107.1 L133.9,142.9 L184.9,178.6 L130.9,214.3 L144.7,250.0 L166.1,285.7 L182.6,321.4 L149.0,357.1 L138.2,392.9 L130.3,428.6 L168.2,464.3 L175.4,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="147.9" cy="0.0" r="3.5" fill="#000" opacity="0.64"/>
-    <circle cx="155.3" cy="107.1" r="3.2" fill="#000" opacity="0.45"/>
-    <circle cx="130.9" cy="214.3" r="2.4" fill="#000" opacity="0.63"/>
-    <circle cx="182.6" cy="321.4" r="1.8" fill="#000" opacity="0.44"/>
-    <circle cx="130.3" cy="428.6" r="2.8" fill="#000" opacity="0.58"/>
-    <text x="133.7" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="135.9" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
-    <text x="154.0" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <path d="M245.7,0.0 L284.7,35.7 L262.4,71.4 L257.0,107.1 L265.2,142.9 L275.3,178.6 L271.1,214.3 L236.1,250.0 L223.5,285.7 L241.6,321.4 L238.5,357.1 L234.9,392.9 L281.7,428.6 L277.5,464.3 L241.5,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="245.7" cy="0.0" r="2.8" fill="#000" opacity="0.46"/>
-    <circle cx="257.0" cy="107.1" r="3.3" fill="#000" opacity="0.48"/>
-    <circle cx="271.1" cy="214.3" r="2.0" fill="#000" opacity="0.40"/>
-    <circle cx="241.6" cy="321.4" r="2.6" fill="#000" opacity="0.41"/>
-    <circle cx="281.7" cy="428.6" r="2.7" fill="#000" opacity="0.66"/>
-    <text x="267.4" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
-    <text x="276.1" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">01</text>
-    <text x="243.5" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <path d="M424.6,0.0 L447.3,35.7 L464.1,71.4 L470.9,107.1 L425.5,142.9 L426.0,178.6 L459.3,214.3 L453.9,250.0 L440.4,285.7 L453.9,321.4 L445.7,357.1 L431.8,392.9 L451.1,428.6 L476.1,464.3 L459.3,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="424.6" cy="0.0" r="1.7" fill="#000" opacity="0.65"/>
-    <circle cx="470.9" cy="107.1" r="3.0" fill="#000" opacity="0.61"/>
-    <circle cx="459.3" cy="214.3" r="2.2" fill="#000" opacity="0.42"/>
-    <circle cx="453.9" cy="321.4" r="1.8" fill="#000" opacity="0.30"/>
-    <circle cx="451.1" cy="428.6" r="2.9" fill="#000" opacity="0.59"/>
-    <text x="469.1" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
-    <text x="464.3" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <text x="450.7" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <path d="M547.6,0.0 L527.8,35.7 L539.0,71.4 L525.4,107.1 L576.1,142.9 L574.1,178.6 L573.9,214.3 L553.4,250.0 L546.4,285.7 L522.2,321.4 L538.3,357.1 L578.1,392.9 L566.7,428.6 L530.4,464.3 L530.5,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="547.6" cy="0.0" r="2.6" fill="#000" opacity="0.33"/>
-    <circle cx="525.4" cy="107.1" r="3.0" fill="#000" opacity="0.63"/>
-    <circle cx="573.9" cy="214.3" r="3.5" fill="#000" opacity="0.51"/>
-    <circle cx="522.2" cy="321.4" r="1.8" fill="#000" opacity="0.56"/>
-    <circle cx="566.7" cy="428.6" r="3.4" fill="#000" opacity="0.37"/>
-    <text x="544.0" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
-    <text x="578.9" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <text x="543.3" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <path d="M642.6,0.0 L660.0,35.7 L640.9,71.4 L674.6,107.1 L645.9,142.9 L632.9,178.6 L621.1,214.3 L618.4,250.0 L652.5,285.7 L654.7,321.4 L617.5,357.1 L662.3,392.9 L620.8,428.6 L621.3,464.3 L619.0,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="642.6" cy="0.0" r="2.2" fill="#000" opacity="0.51"/>
-    <circle cx="674.6" cy="107.1" r="2.1" fill="#000" opacity="0.49"/>
-    <circle cx="621.1" cy="214.3" r="2.6" fill="#000" opacity="0.59"/>
-    <circle cx="654.7" cy="321.4" r="3.3" fill="#000" opacity="0.53"/>
-    <circle cx="620.8" cy="428.6" r="2.0" fill="#000" opacity="0.49"/>
-    <text x="645.9" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
-    <text x="626.1" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <text x="622.5" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">10</text>
-    <path d="M699.7,0.0 L699.3,35.7 L702.1,71.4 L718.8,107.1 L715.3,142.9 L735.1,178.6 L678.5,214.3 L697.9,250.0 L693.9,285.7 L727.3,321.4 L688.1,357.1 L684.3,392.9 L700.9,428.6 L699.2,464.3 L690.0,500.0" fill="none" stroke="#000" stroke-width="1" opacity="0.5"/>
-    <circle cx="699.7" cy="0.0" r="2.0" fill="#000" opacity="0.67"/>
-    <circle cx="718.8" cy="107.1" r="2.4" fill="#000" opacity="0.64"/>
-    <circle cx="678.5" cy="214.3" r="2.6" fill="#000" opacity="0.32"/>
-    <circle cx="727.3" cy="321.4" r="3.5" fill="#000" opacity="0.63"/>
-    <circle cx="700.9" cy="428.6" r="3.4" fill="#000" opacity="0.67"/>
-    <text x="707.1" y="71.4" font-family="monospace" font-size="8" fill="#000" opacity="0.35">FF</text>
-    <text x="683.5" y="214.3" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0x1F</text>
-    <text x="693.1" y="357.1" font-family="monospace" font-size="8" fill="#000" opacity="0.35">0xA</text>
-  </svg>
   <section id="research">
     <div style="max-width:960px;margin:0 auto 3rem">
       <p class="section-label">Current Research</p>
@@ -692,7 +415,6 @@
 
     </div>
   </section>
-  </div><!-- /current-research-wrap -->
 
   <div class="divider"></div>
 
@@ -836,62 +558,6 @@
 
   <!-- CONTACT -->
   <section class="contact-section" id="contact">
-<svg class="bg-svg" viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-    <path d="M43.4,0.0 L57.4,35.7 L54.5,71.4 L83.3,107.1 L79.9,142.9 L92.0,178.6 L46.9,214.3 L65.7,250.0 L43.7,285.7 L54.3,321.4 L70.3,357.1 L43.5,392.9 L53.2,428.6 L78.4,464.3 L72.6,500.0" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
-    <circle cx="43.4" cy="0.0" r="1.9" fill="#fff" opacity="0.54"/>
-    <circle cx="83.3" cy="107.1" r="3.1" fill="#fff" opacity="0.30"/>
-    <circle cx="46.9" cy="214.3" r="3.1" fill="#fff" opacity="0.58"/>
-    <circle cx="54.3" cy="321.4" r="2.2" fill="#fff" opacity="0.36"/>
-    <circle cx="53.2" cy="428.6" r="3.4" fill="#fff" opacity="0.43"/>
-    <text x="59.5" y="71.4" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">10</text>
-    <text x="51.9" y="214.3" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">0xA</text>
-    <text x="75.3" y="357.1" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">10</text>
-    <path d="M154.4,0.0 L150.0,35.7 L137.6,71.4 L160.9,107.1 L142.1,142.9 L186.8,178.6 L139.6,214.3 L151.6,250.0 L170.4,285.7 L184.7,321.4 L155.4,357.1 L145.9,392.9 L139.0,428.6 L172.2,464.3 L178.4,500.0" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
-    <circle cx="154.4" cy="0.0" r="3.5" fill="#fff" opacity="0.64"/>
-    <circle cx="160.9" cy="107.1" r="3.2" fill="#fff" opacity="0.45"/>
-    <circle cx="139.6" cy="214.3" r="2.4" fill="#fff" opacity="0.63"/>
-    <circle cx="184.7" cy="321.4" r="1.8" fill="#fff" opacity="0.44"/>
-    <circle cx="139.0" cy="428.6" r="2.8" fill="#fff" opacity="0.58"/>
-    <text x="142.6" y="71.4" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">10</text>
-    <text x="144.6" y="214.3" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">0x1F</text>
-    <text x="160.4" y="357.1" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">FF</text>
-    <path d="M256.6,0.0 L290.8,35.7 L271.2,71.4 L266.6,107.1 L273.7,142.9 L282.6,178.6 L278.8,214.3 L248.2,250.0 L237.2,285.7 L253.1,321.4 L250.4,357.1 L247.2,392.9 L288.2,428.6 L284.5,464.3 L253.0,500.0" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
-    <circle cx="256.6" cy="0.0" r="2.8" fill="#fff" opacity="0.46"/>
-    <circle cx="266.6" cy="107.1" r="3.3" fill="#fff" opacity="0.48"/>
-    <circle cx="278.8" cy="214.3" r="2.0" fill="#fff" opacity="0.40"/>
-    <circle cx="253.1" cy="321.4" r="2.6" fill="#fff" opacity="0.41"/>
-    <circle cx="288.2" cy="428.6" r="2.7" fill="#fff" opacity="0.66"/>
-    <text x="276.2" y="71.4" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">0xA</text>
-    <text x="283.8" y="214.3" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">01</text>
-    <text x="255.4" y="357.1" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">FF</text>
-    <path d="M429.9,0.0 L449.7,35.7 L464.4,71.4 L470.3,107.1 L430.7,142.9 L431.1,178.6 L460.2,214.3 L455.5,250.0 L443.7,285.7 L455.5,321.4 L448.3,357.1 L436.2,392.9 L453.1,428.6 L474.9,464.3 L460.2,500.0" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
-    <circle cx="429.9" cy="0.0" r="1.7" fill="#fff" opacity="0.65"/>
-    <circle cx="470.3" cy="107.1" r="3.0" fill="#fff" opacity="0.61"/>
-    <circle cx="460.2" cy="214.3" r="2.2" fill="#fff" opacity="0.42"/>
-    <circle cx="455.5" cy="321.4" r="1.8" fill="#fff" opacity="0.30"/>
-    <circle cx="453.1" cy="428.6" r="2.9" fill="#fff" opacity="0.59"/>
-    <text x="469.4" y="71.4" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">0x1F</text>
-    <text x="465.2" y="214.3" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">10</text>
-    <text x="453.3" y="357.1" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">10</text>
-    <path d="M554.1,0.0 L536.8,35.7 L546.6,71.4 L534.7,107.1 L579.1,142.9 L577.4,178.6 L577.1,214.3 L559.2,250.0 L553.1,285.7 L532.0,321.4 L546.0,357.1 L580.9,392.9 L570.9,428.6 L539.1,464.3 L539.2,500.0" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
-    <circle cx="554.1" cy="0.0" r="2.6" fill="#fff" opacity="0.33"/>
-    <circle cx="534.7" cy="107.1" r="3.0" fill="#fff" opacity="0.63"/>
-    <circle cx="577.1" cy="214.3" r="3.5" fill="#fff" opacity="0.51"/>
-    <circle cx="532.0" cy="321.4" r="1.8" fill="#fff" opacity="0.56"/>
-    <circle cx="570.9" cy="428.6" r="3.4" fill="#fff" opacity="0.37"/>
-    <text x="551.6" y="71.4" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">0xA</text>
-    <text x="582.1" y="214.3" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">FF</text>
-    <text x="551.0" y="357.1" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">FF</text>
-    <path d="M653.9,0.0 L669.2,35.7 L652.5,71.4 L681.9,107.1 L656.8,142.9 L645.4,178.6 L635.1,214.3 L632.7,250.0 L662.6,285.7 L664.5,321.4 L632.0,357.1 L671.2,392.9 L634.9,428.6 L635.3,464.3 L633.3,500.0" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
-    <circle cx="653.9" cy="0.0" r="2.2" fill="#fff" opacity="0.51"/>
-    <circle cx="681.9" cy="107.1" r="2.1" fill="#fff" opacity="0.49"/>
-    <circle cx="635.1" cy="214.3" r="2.6" fill="#fff" opacity="0.59"/>
-    <circle cx="664.5" cy="321.4" r="3.3" fill="#fff" opacity="0.53"/>
-    <circle cx="634.9" cy="428.6" r="2.0" fill="#fff" opacity="0.49"/>
-    <text x="657.5" y="71.4" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">0xA</text>
-    <text x="640.1" y="214.3" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">FF</text>
-    <text x="637.0" y="357.1" font-family="monospace" font-size="8" fill="#fff" opacity="0.35">10</text>
-  </svg>
     <p class="section-label">Contact</p>
     <h2 class="contact-headline">Different problems,<br>same instinct —<br><em>observe first.</em></h2>
     <p class="contact-sub">Open to collaborations, speaking invitations, and research discussions<br>in HCI, XR, AI-assisted learning, or human-centered security.</p>
@@ -902,49 +568,6 @@
     </div>
     <p class="contact-email">uta.wagner@th-deg.de</p>
   </section>
-
-  <script>
-  (function(){
-    let scrollTimer = null;
-    let isScrolling = false;
-
-    // Add a class to body while scrolling
-    window.addEventListener('scroll', function() {
-      if (!isScrolling) {
-        isScrolling = true;
-        document.body.classList.add('is-scrolling');
-      }
-      clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(function() {
-        isScrolling = false;
-        document.body.classList.remove('is-scrolling');
-      }, 400);
-    }, { passive: true });
-  })();
-  </script>
-
-  <style>
-  /* Fast, bright pulse when scrolling */
-  body.is-scrolling .bg-svg circle {
-    animation-duration: 0.4s !important;
-    animation-timing-function: ease-out !important;
-  }
-  body.is-scrolling .bg-svg path {
-    animation-duration: 0.5s !important;
-    animation-timing-function: ease-out !important;
-  }
-  body.is-scrolling .bg-svg text {
-    animation-duration: 0.45s !important;
-    animation-timing-function: ease-out !important;
-  }
-  body.is-scrolling .bg-svg circle {
-    animation-name: pulse-dot-fast !important;
-  }
-  @keyframes pulse-dot-fast {
-    0%,100% { opacity: 0.1; }
-    50%      { opacity: 0.9; }
-  }
-  </style>
 
 </body>
 </html>
