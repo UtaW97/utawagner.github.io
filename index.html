@@ -53,24 +53,22 @@
 
     /* HERO */
     .hero {
-    .hero {
       min-height: 92vh;
-      display: flex;
-      flex-direction: row;
-      align-items: stretch;
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      align-items: center;
       padding: 0;
       overflow: hidden;
     }
     .hero-text {
-      flex: 0 0 420px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       padding: 0 3rem;
     }
     .hero-video {
-      flex: 1 1 auto;
       position: relative;
+      height: 92vh;
       overflow: hidden;
     }
     .hero-video video {
@@ -84,9 +82,9 @@
       mask-image: radial-gradient(ellipse 90% 88% at 50% 50%, black 40%, transparent 80%);
     }
     @media (max-width: 900px) {
-      .hero { flex-direction: column; }
-      .hero-text { flex: none; padding: 4rem 1.5rem 2rem; }
-      .hero-video { flex: none; height: 60vw; width: 100%; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-text { padding: 4rem 1.5rem 2rem; }
+      .hero-video { height: 60vw; order: -1; }
     }
     .eyebrow {
       font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
@@ -317,13 +315,11 @@
         <a href="#research" class="btn-primary">View Research</a>
         <a href="#contact" class="btn-secondary">Get in Touch</a>
       </div>
+    </div>
     <div class="hero-video">
       <video autoplay muted loop playsinline preload="auto" oncanplay="this.play()">
         <source src="video.mp4" type="video/mp4">
       </video>
-    </div>
-    </div>
-    
     </div>
   </div>
 
