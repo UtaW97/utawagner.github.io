@@ -54,8 +54,8 @@
     /* HERO */
     .hero {
       min-height: 92vh; display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 2rem;
+      grid-template-columns: 1fr 2fr;
+      gap: 1rem;
       align-items: center;
       padding: 0 3rem;
       max-width: 1200px;
@@ -63,24 +63,15 @@
     .hero-text { display: flex; flex-direction: column; }
     .hero-video {
       position: relative;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
       aspect-ratio: 16/9;
-      margin-left: 2rem;
     }
     .hero-video video {
       width: 100%; height: 100%;
       object-fit: cover;
       display: block;
-    }
-    .hero-video-label {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 0.75rem 1rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);
-      font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.85);
-      letter-spacing: 0.04em;
+      border-radius: 0;
+      -webkit-mask-image: radial-gradient(ellipse 88% 85% at 50% 50%, black 35%, transparent 78%);
+      mask-image: radial-gradient(ellipse 88% 85% at 50% 50%, black 35%, transparent 78%);
     }
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; min-height: auto; padding: 5rem 1.5rem 3rem; gap: 2.5rem; }
@@ -224,14 +215,14 @@
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 380px;
+      width: 480px;
       pointer-events: none;
     }
     .carousel-center img {
       width: 100%; display: block;
-      opacity: 0.35;
-      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 75%);
-      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 75%);
+      opacity: 0.55;
+      -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 50%, black 35%, transparent 72%);
+      mask-image: radial-gradient(ellipse 85% 75% at 50% 50%, black 35%, transparent 72%);
     }
 
     .carousel-btns {
@@ -256,7 +247,7 @@
       .pub-card { width: 120px; padding: 0.75rem; }
       .pub-card-title { font-size: 11px; }
       .pub-card-authors { display: none; }
-      .carousel-center { width: 200px; }
+      .carousel-center { width: 240px; }
     }
 
     /* CONTACT */
@@ -317,10 +308,9 @@
       </div>
     </div>
     <div class="hero-video">
-      <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:18px;" oncanplay="this.play()">
+      <video autoplay muted loop playsinline preload="auto" oncanplay="this.play()">
         <source src="video.mp4" type="video/mp4">
       </video>
-      <div class="hero-video-label">Eye-Hand Movement of Objects in Near Space · UIST 2024</div>
     </div>
   </div>
 
